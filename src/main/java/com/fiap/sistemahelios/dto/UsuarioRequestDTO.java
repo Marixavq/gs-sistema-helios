@@ -1,0 +1,46 @@
+package com.fiap.sistemahelios.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record UsuarioRequestDTO(
+        
+        @Schema(
+                description = "Nome do usuário",
+                example = "Ana Silva"
+        )
+        @NotBlank(message = "Nome é obrigatório")
+        @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
+        String nome,
+
+        @Schema(
+                description = "Email do usuário",
+                example = "anasilva@gmail.com"
+        )
+        @NotBlank(message = "Email é obrigatório")
+        @Email(message = "Email inválido")
+        @Size(max = 120, message = "O email deve ter no máximo 120 caracteres")
+        String email,
+
+        @Schema(
+                description = "Senha do usuário",
+                example = "123456"
+        )
+        @NotBlank(message = "Senha obrigatória")
+        @Size(min = 6, max = 8, message = "Senha deve ter entre 6 e 8 caracteres")
+        String senha,
+
+        @Schema(
+                description = "Tipo do usuário",
+                example = "Turista"
+        )
+        @NotBlank(message = "Tipo de usuário é obrigatório")
+        String tipoUsuario
+
+) {
+}
+
+
+
