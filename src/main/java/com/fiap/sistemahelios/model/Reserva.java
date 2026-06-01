@@ -35,7 +35,7 @@ public class Reserva {
     @NotNull(message = "O ID do modulo é obrigatório")
     private ModuloHabitacional modulo;
 
-    @NotBlank(message = "Data de início da reserva é obrigatória")
+    @NotNull(message = "Data de início da reserva é obrigatória")
     @Column(name = "data_inicio")
     @Schema(
             description = "Data de início da reserva do usuário",
@@ -43,7 +43,7 @@ public class Reserva {
     )
     private LocalDate dataInicio;
 
-    @NotBlank(message = "Data de fim da reserva é obrigatória")
+    @NotNull(message = "Data de fim da reserva é obrigatória")
     @Column(name = "data_cadastro")
     @Schema(
             description = "Data de fim da reserva do usuário",

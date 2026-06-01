@@ -9,8 +9,10 @@ import com.fiap.sistemahelios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
@@ -32,7 +34,7 @@ public class UsuarioService {
         usuario.setSenha(requestDTO.senha());
         usuario.setTipoUsuario(requestDTO.tipoUsuario());
 
-        usuario.setStatusUsuario("ATIVO");
+        usuario.setStatusUsuario("Ativo");
         usuario.setNivelAcesso(1);
 
         usuarioRepository.save(usuario);
@@ -82,7 +84,6 @@ public class UsuarioService {
         if (!usuarioRepository.existsById(id)) {
             throw new UsuarioNaoEncontradoException("Usuário não encontrado com ID: " + id);
         }
-
         usuarioRepository.deleteById(id);
     }
 }

@@ -14,8 +14,10 @@ import com.fiap.sistemahelios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
@@ -69,7 +71,7 @@ public class ReservaService {
     @Transactional(readOnly = true)
     public Page<ReservaResponseDTO> buscarReservaPorIdUsuario(Long idUsuario, Pageable pageable) {
 
-        return reservaRepository.findReservaByIdUsuario(idUsuario, pageable)
+        return reservaRepository.findReservaByUsuarioId(idUsuario, pageable)
                 .map(ReservaResponseDTO::fromEntity);
     }
 

@@ -91,11 +91,7 @@ public class ReservaController {
     }
 
 
-
-
-
-
-
+    //http://localhost:8080/api/reservas/usuario/1
     @GetMapping("/usuario/{idUsuario}")
     @Operation(
             summary = "Buscar reservas por usuário",
@@ -123,13 +119,6 @@ public class ReservaController {
         Page<ReservaResponseDTO> reservas = reservaService.buscarReservaPorIdUsuario(idUsuario, pageable);
         return ResponseEntity.ok(reservas);
     }
-
-
-
-
-
-
-
 
     @PutMapping("/{id}")
     @Operation(

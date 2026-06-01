@@ -24,137 +24,131 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Usuarios", description = "Endpoints para gerenciamento de usuarios")
 public class UsuarioController {
 
-    @RestController
-    @RequestMapping("/api/users")
-    @Tag(name = "Users", description = "Endpoints para gerenciamento de usuários")
-    public class UserController {
 
-        @Autowired
-        private UsuarioService usuarioService;
+    @Autowired
+    private UsuarioService usuarioService;
 
-        @PostMapping
-        @Operation(
-                summary = "Criar usuário",
-                description = "Cria um novo usuário no sistema."
-        )
-        @ApiResponses(value = {
-                @ApiResponse(
-                        responseCode = "201",
-                        description = "Usuário criado com sucesso"
-                ),
-                @ApiResponse(
-                        responseCode = "400",
-                        description = "Dados inválidos"
-                )
-        })
-        public ResponseEntity<UsuarioResponseDTO> criar(@Valid @RequestBody UsuarioRequestDTO requestDTO) {
-            UsuarioResponseDTO novoUser = usuarioService.salvar(requestDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novoUser);
-        }
+    @PostMapping
+    @Operation(
+            summary = "Criar usuário",
+            description = "Cria um novo usuário no sistema."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Usuário criado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Dados inválidos"
+            )
+    })
+    public ResponseEntity<UsuarioResponseDTO> criar(@Valid @RequestBody UsuarioRequestDTO requestDTO) {
+        UsuarioResponseDTO novoUser = usuarioService.salvar(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUser);
+    }
 
-        @GetMapping
-        @Operation(
-                summary = "Listar usuários",
-                description = "Retorna uma lista completa de todos os usuários cadastrados."
-        )
-        @ApiResponse(
-                responseCode = "200",
-                description = "Lista de usuários retornada com sucesso",
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDTO.class)
-                )
-        )
-        public ResponseEntity<Page<UsuarioResponseDTO>> listarTodos(
-                @PageableDefault(
-                        page = 0,
-                        size = 10,
-                        sort = "id",
-                        direction = Sort.Direction.ASC
-                ) Pageable pageable
-        ) {
-            Page<UsuarioResponseDTO> users = usuarioService.listarTodos(pageable);
-            return ResponseEntity.ok(users);
-        }
+    @GetMapping
+    @Operation(
+            summary = "Listar usuários",
+            description = "Retorna uma lista completa de todos os usuários cadastrados."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Lista de usuários retornada com sucesso",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDTO.class)
+            )
+    )
+    public ResponseEntity<Page<UsuarioResponseDTO>> listarTodos(
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
+    ) {
+        Page<UsuarioResponseDTO> users = usuarioService.listarTodos(pageable);
+        return ResponseEntity.ok(users);
+    }
 
-        @GetMapping("/{id}")
-        @Operation(
-                summary = "Buscar usuário por ID",
-                description = "Retorna um usuário específico baseado no ID."
-        )
-        @ApiResponses(value = {
-                @ApiResponse(
-                        responseCode = "200",
-                        description = "Usuário encontrado com sucesso"
-                ),
-                @ApiResponse(
-                        responseCode = "404",
-                        description = "Usuário não encontrado"
-                )
-        })
-        public ResponseEntity<UsuarioResponseDTO> buscarPorId(@PathVariable Long id) {
-            return ResponseEntity.ok(usuarioService.buscarPorId(id));
-        }
+    @GetMapping("/{id}")
+    @Operation(
+            summary = "Buscar usuário por ID",
+            description = "Retorna um usuário específico baseado no ID."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário encontrado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado"
+            )
+    })
+    public ResponseEntity<UsuarioResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.buscarPorId(id));
+    }
 
-        @GetMapping("/email/{email}")
-        @Operation(
-                summary = "Buscar usuário por email",
-                description = "Retorna um usuário específico baseado no email."
-        )
-        @ApiResponses(value = {
-                @ApiResponse(
-                        responseCode = "200",
-                        description = "Usuário encontrado com sucesso"
-                ),
-                @ApiResponse(
-                        responseCode = "404",
-                        description = "Usuário não encontrado"
-                )
-        })
-        public ResponseEntity<UsuarioResponseDTO> buscarPorEmail(@PathVariable String email) {
-            return ResponseEntity.ok(usuarioService.buscarPorEmail(email));
-        }
+    @GetMapping("/email/{email}")
+    @Operation(
+            summary = "Buscar usuário por email",
+            description = "Retorna um usuário específico baseado no email."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário encontrado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado"
+            )
+    })
+    public ResponseEntity<UsuarioResponseDTO> buscarPorEmail(@PathVariable String email) {
+        return ResponseEntity.ok(usuarioService.buscarPorEmail(email));
+    }
 
-        @PutMapping("/{id}")
-        @Operation(
-                summary = "Atualizar usuário",
-                description = "Atualiza os dados de um usuário existente."
-        )
-        @ApiResponses(value = {
-                @ApiResponse(
-                        responseCode = "200",
-                        description = "Usuário atualizado com sucesso"
-                ),
-                @ApiResponse(
-                        responseCode = "404",
-                        description = "Usuário não encontrado"
-                ),
-                @ApiResponse(
-                        responseCode = "400",
-                        description = "Dados inválidos"
-                )
-        })
-        public ResponseEntity<UsuarioResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioRequestDTO requestDTO) {
-            return ResponseEntity.ok(usuarioService.atualizar(id, requestDTO));
-        }
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Atualizar usuário",
+            description = "Atualiza os dados de um usuário existente."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário atualizado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Dados inválidos"
+            )
+    })
+    public ResponseEntity<UsuarioResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioRequestDTO requestDTO) {
+        return ResponseEntity.ok(usuarioService.atualizar(id, requestDTO));
+    }
 
-        @DeleteMapping("/{id}")
-        @Operation(
-                summary = "Deletar usuário",
-                description = "Remove um usuário do sistema baseado no ID."
-        )
-        @ApiResponses(value = {
-                @ApiResponse(
-                        responseCode = "204",
-                        description = "Usuário removido com sucesso"
-                ),
-                @ApiResponse(
-                        responseCode = "404",
-                        description = "Usuário não encontrado"
-                )
-        })
-        public ResponseEntity<Void> deletar(@PathVariable Long id) {
-            usuarioService.deletar(id);
-            return ResponseEntity.noContent().build();
-        }
-
+    @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Deletar usuário",
+            description = "Remove um usuário do sistema baseado no ID."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Usuário removido com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado"
+            )
+    })
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        usuarioService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

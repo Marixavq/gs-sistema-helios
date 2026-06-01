@@ -1,22 +1,67 @@
 package com.fiap.sistemahelios.model;
 
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+@Entity
+@Table(name = "modulos_habitacionais")
+@Schema(
+        name = "Modulo Habitacional",
+        description = "Representa um modulo habitacional no sistema Helios"
+)
 public class ModuloHabitacional {
 
-    private Long idModulo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "Habitat é obrigatório")
+    @ManyToOne
+    @JoinColumn(name = "habitat_id", nullable = false)
     private Habitat habitat;
+
+    @NotBlank(message = "Nome do módulo é obrigatório")
+    @Size(min = 3, max = 100, message = "O nome do módulo deve ter entre 3 e 100 caracteres")
+    @Column(name = "nome_modulo", nullable = false, length = 100)
     private String nomeModulo;
+
+    @NotBlank(message = "Tipo do módulo é obrigatório")
+    @Size(min = 3, max = 50, message = "O tipo do módulo deve ter entre 3 e 50 caracteres")
+    @Column(name = "tipo_modulo", nullable = false, length = 50)
     private String tipoModulo;
+
+    @NotNull(message = "Capacidade de ocupantes é obrigatória")
+    @Positive(message = "A capacidade deve ser maior que zero")
+    @Column(name = "capacidade_ocupantes", nullable = false)
     private Integer capacidadeOcupantes;
+
+    @NotBlank(message = "Status do módulo é obrigatório")
+    @Size(max = 20, message = "O status do módulo deve ter no máximo 20 caracteres")
+    @Column(name = "status_modulo", nullable = false, length = 20)
     private String statusModulo;
+
+    @NotBlank(message = "Nível de risco é obrigatório")
+    @Size(max = 20, message = "O nível de risco deve ter no máximo 20 caracteres")
+    @Column(name = "nivel_risco", nullable = false, length = 20)
     private String nivelRisco;
+
+    @NotNull(message = "Consumo de energia é obrigatório")
+    @PositiveOrZero(message = "O consumo de energia não pode ser negativo")
+    @Column(name = "consumo_energia", nullable = false)
     private Double consumoEnergia;
+
+    @NotNull(message = "Consumo de água é obrigatório")
+    @PositiveOrZero(message = "O consumo de água não pode ser negativo")
+    @Column(name = "consumo_agua", nullable = false)
     private Double consumoAgua;
+
 
     public ModuloHabitacional() {
     }
 
-    public ModuloHabitacional(Long idModulo, Habitat habitat, String nomeModulo, String tipoModulo, Integer capacidadeOcupantes, String statusModulo, String nivelRisco, Double consumoEnergia, Double consumoAgua) {
-        this.idModulo = idModulo;
+    public ModuloHabitacional(Habitat habitat, String nomeModulo, String tipoModulo, Integer capacidadeOcupantes, String statusModulo, String nivelRisco, Double consumoEnergia, Double consumoAgua) {
         this.habitat = habitat;
         this.nomeModulo = nomeModulo;
         this.tipoModulo = tipoModulo;
@@ -27,12 +72,12 @@ public class ModuloHabitacional {
         this.consumoAgua = consumoAgua;
     }
 
-    public Long getIdModulo() {
-        return idModulo;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdModulo(Long idModulo) {
-        this.idModulo = idModulo;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Habitat getHabitat() {

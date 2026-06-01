@@ -22,24 +22,24 @@ public record ReservaRequestDTO(
         @NotNull(message = "ID do Modulo Habitacional da reserva é obrigatório")
         Long idModulo,
 
-        @NotBlank(message = "Data de fim da reserva é obrigatória")
+        @NotNull(message = "Data de fim da reserva é obrigatória")
         @Schema(
                 description = "Data de fim da reserva do usuário",
                 example = "2026-05-14"
         )
         LocalDate dataInicio,
 
-        @NotBlank(message = "Data de fim da reserva é obrigatória")
+        @NotNull(message = "Data de fim da reserva é obrigatória")
         @Schema(
                 description = "Data de fim da reserva do usuário",
                 example = "2026-05-14"
         )
         LocalDate dataFim,
 
-        @NotBlank(message = "Status da reserva é obrigatório")
+        @NotNull(message = "Status da reserva é obrigatório")
         @Schema(
                 description = "Indica se a reserva ainda está ativa sistema",
-                example = "Cancelada"
+                example = "Confirmada"
         )
         String statusReserva
 

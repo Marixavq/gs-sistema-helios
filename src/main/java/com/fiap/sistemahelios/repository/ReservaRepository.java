@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
-    Page<Reserva> findReservaByIdUsuario(Long idUsuario, Pageable pageable);
-
+    Page<Reserva> findReservaByUsuarioId(Long idUsuario, Pageable pageable);
 }

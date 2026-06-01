@@ -1,35 +1,102 @@
 package com.fiap.sistemahelios.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "habitats")
+@Schema(
+        name = "Habitat",
+        description = "Representa um habitat no sistema Helios"
+)
 public class Habitat {
-    private Long idHabitat;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(
+            description = "ID único do habitat",
+            example = "1",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
+    private Long id;
+
+    @NotBlank(message = "Nome do habitat é obrigatório")
+    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
+    @Column(nullable = false, length = 100)
+    @Schema(
+            description = "Nome do habitat",
+            example = "Tundralândia",
+            minLength = 3,
+            maxLength = 100
+    )
     private String nome;
+
+    @NotBlank(message = "Localização é obrigatória")
+    @Size(min = 3, max = 50, message = "A localização deve ter entre 3 e 50 caracteres")
+    @Column(nullable = false, length = 100)
+    @Schema(
+            description = "Localização do habitat",
+            example = "Marte",
+            minLength = 3,
+            maxLength = 50
+    )
     private String localizacao;
+
+    @NotBlank(message = "Tipo de habitat é obrigatório")
+    @Size(min = 3, max = 50, message = "O tipo de habitat deve ter entre 3 e 50 caracteres")
+    @Column(name = "tipo_habitat", nullable = false, length = 50)
+    @Schema(
+            description = "Nome do habitat",
+            example = "Tundralândia",
+            minLength = 3,
+            maxLength = 50
+    )
     private String tipoHabitat;
+
+    @NotNull(message = "Capacidade total é obrigatória")
+    @Positive(message = "A capacidade total deve ser maior que zero")
+    @Column(name = "capacidade_total", nullable = false)
+    @Schema(
+            description = "Capacidade total do habitat",
+            example = "50"
+    )
     private Integer capacidadeTotal;
+
+    @NotBlank(message = "Status operacional é obrigatório")
+    @Size(max = 20, message = "O status operacional deve ter no máximo 20 caracteres")
+    @Column(name = "status_operacional", nullable = false, length = 20)
+    @Schema(
+            description = "Status operacional do habitat",
+            example = "Ativo"
+    )
     private String statusOperacional;
+
+    @Column(name = "data_criacao", updatable = false)
     private LocalDate dataCriacao;
 
     public Habitat() {
     }
 
-    public Habitat(Long idHabitat, String nome, String localizacao, String tipoHabitat, Integer capacidadeTotal, String statusOperacional, LocalDate dataCriacao) {
-        this.idHabitat = idHabitat;
+    public Habitat(String nome, String localizacao, String tipoHabitat, Integer capacidadeTotal, String statusOperacional) {
         this.nome = nome;
         this.localizacao = localizacao;
         this.tipoHabitat = tipoHabitat;
         this.capacidadeTotal = capacidadeTotal;
         this.statusOperacional = statusOperacional;
-        this.dataCriacao = dataCriacao;
     }
 
-    public Long getIdHabitat() {
-        return idHabitat;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdHabitat(Long idHabitat) {
-        this.idHabitat = idHabitat;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -78,5 +145,10 @@ public class Habitat {
 
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataCriacao = LocalDate.now();
     }
 }

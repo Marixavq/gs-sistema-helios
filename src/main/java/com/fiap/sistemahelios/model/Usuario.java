@@ -32,7 +32,6 @@ public class Usuario {
     @Schema(
             description = "Nome do usuário",
             example = "Ana Silva",
-            required = true,
             minLength = 3,
             maxLength = 100
     )
@@ -45,7 +44,6 @@ public class Usuario {
     @Schema(
             description = "Email único do usuário",
             example = "anasilva@gmail.com",
-            required = true,
             minLength = 3,
             maxLength = 120
     )
@@ -57,7 +55,6 @@ public class Usuario {
     @Schema(
             description = "Senha do usuário",
             example = "123642",
-            required = true,
             minLength = 6,
             maxLength = 8
     )
@@ -68,7 +65,6 @@ public class Usuario {
     @Schema(
             description = "Tipo do usuário",
             example = "Turista",
-            required = true,
             maxLength = 20
     )
     private String tipoUsuario;
