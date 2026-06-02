@@ -5,8 +5,6 @@ import com.fiap.sistemahelios.exception.*;
 import com.fiap.sistemahelios.model.Habitat;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
 import com.fiap.sistemahelios.model.Sensor;
-import com.fiap.sistemahelios.model.Usuario;
-import com.fiap.sistemahelios.repository.HabitatRepository;
 import com.fiap.sistemahelios.repository.ModuloHabitacionalRepository;
 import com.fiap.sistemahelios.repository.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;

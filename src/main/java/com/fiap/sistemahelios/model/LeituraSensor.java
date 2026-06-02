@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class LeituraSensor {
 
-    private Long idLeitura;
+    private Long id;
     private Sensor sensor;
     private Double valorLeitura;
     private LocalDateTime dataHoraLeitura;
@@ -13,20 +13,19 @@ public class LeituraSensor {
     public LeituraSensor() {
     }
 
-    public LeituraSensor(Long idLeitura, Sensor sensor, Double valorLeitura, LocalDateTime dataHoraLeitura, String statusLeitura) {
-        this.idLeitura = idLeitura;
+    public LeituraSensor(Sensor sensor, Double valorLeitura, LocalDateTime dataHoraLeitura, String statusLeitura) {
         this.sensor = sensor;
         this.valorLeitura = valorLeitura;
         this.dataHoraLeitura = dataHoraLeitura;
         this.statusLeitura = statusLeitura;
     }
 
-    public Long getIdLeitura() {
-        return idLeitura;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdLeitura(Long idLeitura) {
-        this.idLeitura = idLeitura;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Sensor getSensor() {
