@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Sensor {
 
-    private Long idSensor;
+    private Long id;
     private ModuloHabitacional modulo;
     private String nomeSensor;
     private String tipoSensor;
@@ -17,8 +17,7 @@ public class Sensor {
     public Sensor() {
     }
 
-    public Sensor(Long idSensor, ModuloHabitacional modulo, String nomeSensor, String tipoSensor, String statusSensor, String unidadeMedida, Double limiteMinimo, Double limiteMaximo, LocalDate dataInstalacao) {
-        this.idSensor = idSensor;
+    public Sensor( ModuloHabitacional modulo, String nomeSensor, String tipoSensor, String statusSensor, String unidadeMedida, Double limiteMinimo, Double limiteMaximo, LocalDate dataInstalacao) {
         this.modulo = modulo;
         this.nomeSensor = nomeSensor;
         this.tipoSensor = tipoSensor;
@@ -29,12 +28,12 @@ public class Sensor {
         this.dataInstalacao = dataInstalacao;
     }
 
-    public Long getIdSensor() {
-        return idSensor;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdSensor(Long idSensor) {
-        this.idSensor = idSensor;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public ModuloHabitacional getModulo() {
