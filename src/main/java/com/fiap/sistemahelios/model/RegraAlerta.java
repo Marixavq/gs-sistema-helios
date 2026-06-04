@@ -2,7 +2,7 @@ package com.fiap.sistemahelios.model;
 
 public class RegraAlerta {
 
-    private Long idRegra;
+    private Long id;
     private String tipoSensor;
     private Double valorMinimo;
     private Double valorMaximo;
@@ -13,8 +13,7 @@ public class RegraAlerta {
     public RegraAlerta() {
     }
 
-    public RegraAlerta(Long idRegra, String tipoSensor, Double valorMinimo, Double valorMaximo, String nivelCriticidade, String mensagemPadrao, Boolean ativo) {
-        this.idRegra = idRegra;
+    public RegraAlerta(String tipoSensor, Double valorMinimo, Double valorMaximo, String nivelCriticidade, String mensagemPadrao, Boolean ativo) {
         this.tipoSensor = tipoSensor;
         this.valorMinimo = valorMinimo;
         this.valorMaximo = valorMaximo;
@@ -23,12 +22,12 @@ public class RegraAlerta {
         this.ativo = ativo;
     }
 
-    public Long getIdRegra() {
-        return idRegra;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdRegra(Long idRegra) {
-        this.idRegra = idRegra;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTipoSensor() {

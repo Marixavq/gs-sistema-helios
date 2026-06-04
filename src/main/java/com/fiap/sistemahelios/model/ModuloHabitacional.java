@@ -37,6 +37,8 @@ public class ModuloHabitacional {
     @Column(name = "capacidade_ocupantes", nullable = false)
     private Integer capacidadeOcupantes;
 
+    private Integer capacidadeAtual;
+
     @NotBlank(message = "Status do módulo é obrigatório")
     @Size(max = 20, message = "O status do módulo deve ter no máximo 20 caracteres")
     @Column(name = "status_modulo", nullable = false, length = 20)
@@ -61,11 +63,12 @@ public class ModuloHabitacional {
     public ModuloHabitacional() {
     }
 
-    public ModuloHabitacional(Habitat habitat, String nomeModulo, String tipoModulo, Integer capacidadeOcupantes, String statusModulo, String nivelRisco, Double consumoEnergia, Double consumoAgua) {
+    public ModuloHabitacional(Habitat habitat, String nomeModulo, String tipoModulo, Integer capacidadeOcupantes, Integer capacidadeAtual, String statusModulo, String nivelRisco, Double consumoEnergia, Double consumoAgua) {
         this.habitat = habitat;
         this.nomeModulo = nomeModulo;
         this.tipoModulo = tipoModulo;
         this.capacidadeOcupantes = capacidadeOcupantes;
+        this.capacidadeAtual = capacidadeAtual;
         this.statusModulo = statusModulo;
         this.nivelRisco = nivelRisco;
         this.consumoEnergia = consumoEnergia;
@@ -110,6 +113,14 @@ public class ModuloHabitacional {
 
     public void setCapacidadeOcupantes(Integer capacidadeOcupantes) {
         this.capacidadeOcupantes = capacidadeOcupantes;
+    }
+
+    public Integer getCapacidadeAtual() {
+        return capacidadeAtual;
+    }
+
+    public void setCapacidadeAtual(Integer capacidadeAtual) {
+        this.capacidadeAtual = capacidadeAtual;
     }
 
     public String getStatusModulo() {

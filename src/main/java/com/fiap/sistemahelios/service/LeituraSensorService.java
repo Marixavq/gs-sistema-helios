@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class LeituraSensorService {
 
-
     private final LeituraSensorRepository leituraSensorRepository;
     private final SensorRepository sensorRepository;
 

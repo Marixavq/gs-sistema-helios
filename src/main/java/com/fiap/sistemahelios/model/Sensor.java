@@ -12,12 +12,13 @@ public class Sensor {
     private String unidadeMedida;
     private Double limiteMinimo;
     private Double limiteMaximo;
+    private Integer intervaloLeituraSegundos;
     private LocalDate dataInstalacao;
 
     public Sensor() {
     }
 
-    public Sensor( ModuloHabitacional modulo, String nomeSensor, String tipoSensor, String statusSensor, String unidadeMedida, Double limiteMinimo, Double limiteMaximo, LocalDate dataInstalacao) {
+    public Sensor(ModuloHabitacional modulo, String nomeSensor, String tipoSensor, String statusSensor, String unidadeMedida, Double limiteMinimo, Double limiteMaximo, Integer intervaloLeituraSegundos, LocalDate dataInstalacao) {
         this.modulo = modulo;
         this.nomeSensor = nomeSensor;
         this.tipoSensor = tipoSensor;
@@ -25,6 +26,7 @@ public class Sensor {
         this.unidadeMedida = unidadeMedida;
         this.limiteMinimo = limiteMinimo;
         this.limiteMaximo = limiteMaximo;
+        this.intervaloLeituraSegundos = intervaloLeituraSegundos;
         this.dataInstalacao = dataInstalacao;
     }
 
@@ -90,6 +92,14 @@ public class Sensor {
 
     public void setLimiteMaximo(Double limiteMaximo) {
         this.limiteMaximo = limiteMaximo;
+    }
+
+    public Integer getIntervaloLeituraSegundos() {
+        return intervaloLeituraSegundos;
+    }
+
+    public void setIntervaloLeituraSegundos(Integer intervaloLeituraSegundos) {
+        this.intervaloLeituraSegundos = intervaloLeituraSegundos;
     }
 
     public LocalDate getDataInstalacao() {

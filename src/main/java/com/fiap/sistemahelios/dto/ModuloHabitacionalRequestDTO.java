@@ -44,6 +44,9 @@ public record ModuloHabitacionalRequestDTO (
     )
     Integer capacidadeOcupantes,
 
+
+    Integer capacidadeAtual,
+
     @NotBlank(message = "Status do módulo é obrigatório")
     @Size(max = 20, message = "O status do módulo deve ter no máximo 20 caracteres")
     @Column(name = "status_modulo", nullable = false, length = 20)

@@ -1,7 +1,6 @@
 package com.fiap.sistemahelios.dto;
 
 import com.fiap.sistemahelios.model.LeituraSensor;
-import com.fiap.sistemahelios.model.ModuloHabitacional;
 
 import java.time.LocalDateTime;
 

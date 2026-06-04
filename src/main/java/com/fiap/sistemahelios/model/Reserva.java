@@ -31,6 +31,11 @@ public class Reserva {
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ocupante", nullable = false)
+    @NotNull(message = "O ID do ocupante é obrigatório")
+    private Ocupante ocupante;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_modulo", nullable = false)
     @NotNull(message = "O ID do modulo é obrigatório")
     private ModuloHabitacional modulo;
@@ -63,8 +68,9 @@ public class Reserva {
     public Reserva() {
     }
 
-    public Reserva(Usuario usuario, ModuloHabitacional modulo, LocalDate dataInicio, LocalDate dataFim, String statusReserva) {
+    public Reserva(Usuario usuario, Ocupante ocupante, ModuloHabitacional modulo, LocalDate dataInicio, LocalDate dataFim, String statusReserva) {
         this.usuario = usuario;
+        this.ocupante = ocupante;
         this.modulo = modulo;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
@@ -85,6 +91,14 @@ public class Reserva {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Ocupante getOcupante() {
+        return ocupante;
+    }
+
+    public void setOcupante(Ocupante ocupante) {
+        this.ocupante = ocupante;
     }
 
     public ModuloHabitacional getModulo() {
