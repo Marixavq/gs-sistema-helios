@@ -14,6 +14,7 @@ public record SensorResponseDTO(
         String unidadeMedida,
         Double limiteMinimo,
         Double limiteMaximo,
+        Integer intervaloLeituraSegundos,
         LocalDate dataInstalacao
 
 ) {
@@ -28,6 +29,7 @@ public record SensorResponseDTO(
                 sensor.getUnidadeMedida(),
                 sensor.getLimiteMinimo(),
                 sensor.getLimiteMaximo(),
+                sensor.getIntervaloLeituraSegundos(),
                 sensor.getDataInstalacao()
         );
     }

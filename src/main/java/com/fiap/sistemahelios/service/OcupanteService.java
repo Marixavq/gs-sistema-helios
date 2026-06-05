@@ -2,7 +2,7 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.OcupanteRequestDTO;
 import com.fiap.sistemahelios.dto.OcupanteResponseDTO;
-import com.fiap.sistemahelios.exception.OcupanteNaoEncontradoException;
+import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Ocupante;
 import com.fiap.sistemahelios.repository.OcupanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +29,6 @@ public class OcupanteService {
         ocupante.setFuncao(requestDTO.funcao());
         ocupante.setStatusOcupante(requestDTO.statusOcupante());
 
-        ocupanteRepository.save(ocupante);
-
         Ocupante ocupanteSalvo = ocupanteRepository.save(ocupante);
 
         return OcupanteResponseDTO.fromEntity(ocupanteSalvo);
@@ -47,14 +45,14 @@ public class OcupanteService {
     @Transactional(readOnly = true)
     public OcupanteResponseDTO buscarPorId(Long id) {
         Ocupante ocupante = ocupanteRepository.findById(id)
-                .orElseThrow(() -> new OcupanteNaoEncontradoException("Ocupante não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + id));
         return OcupanteResponseDTO.fromEntity(ocupante);
     }
 
     @Transactional
     public OcupanteResponseDTO atualizar(Long id, OcupanteRequestDTO requestDTO) {
         Ocupante ocupanteExistente = ocupanteRepository.findById(id)
-                .orElseThrow(() -> new OcupanteNaoEncontradoException("Ocupante não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + id));
         ocupanteExistente.setNome(requestDTO.nome());
         ocupanteExistente.setFuncao(requestDTO.funcao());
         ocupanteExistente.setStatusOcupante(requestDTO.statusOcupante());
@@ -67,7 +65,7 @@ public class OcupanteService {
     @Transactional
     public void deletar(Long id) {
         if (!ocupanteRepository.existsById(id)) {
-            throw new OcupanteNaoEncontradoException("Ocupante não encontrado com ID: " + id);
+            throw new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + id);
         }
         ocupanteRepository.deleteById(id);
     }

@@ -2,9 +2,7 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.ReservaRequestDTO;
 import com.fiap.sistemahelios.dto.ReservaResponseDTO;
-import com.fiap.sistemahelios.exception.ModuloHabitacionalNaoEncontradoException;
-import com.fiap.sistemahelios.exception.ReservaNaoEncontradaException;
-import com.fiap.sistemahelios.exception.UsuarioNaoEncontradoException;
+import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
 import com.fiap.sistemahelios.model.Reserva;
 import com.fiap.sistemahelios.model.Usuario;
@@ -34,10 +32,10 @@ public class ReservaService {
     @Transactional
     public ReservaResponseDTO salvar(ReservaRequestDTO requestDTO) {
         Usuario usuario = usuarioRepository.findById(requestDTO.idUsuario())
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado com ID: " + requestDTO.idUsuario()));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado com ID: " + requestDTO.idUsuario()));
 
         ModuloHabitacional modulo = moduloHabitacionalRepository.findById(requestDTO.idModulo())
-                .orElseThrow(() -> new ModuloHabitacionalNaoEncontradoException("Módulo não encontrado com ID: " + requestDTO.idModulo()));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Módulo não encontrado com ID: " + requestDTO.idModulo()));
 
         Reserva reserva = new Reserva();
         reserva.setUsuario(usuario);
@@ -51,7 +49,6 @@ public class ReservaService {
         return ReservaResponseDTO.fromEntity(reservaSalva);
     }
 
-
     @Transactional(readOnly = true)
     public Page<ReservaResponseDTO> listarTodos(Pageable pageable) {
         return reservaRepository.findAll(pageable)
@@ -61,27 +58,22 @@ public class ReservaService {
     @Transactional(readOnly = true)
     public ReservaResponseDTO buscarPorId(Long id) {
         Reserva reserva = reservaRepository.findById(id)
-                .orElseThrow(() -> new ReservaNaoEncontradaException("Reserva não encontrada com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Reserva não encontrada com ID: " + id));
         return ReservaResponseDTO.fromEntity(reserva);
     }
 
 
-
-
     @Transactional(readOnly = true)
     public Page<ReservaResponseDTO> buscarReservaPorIdUsuario(Long idUsuario, Pageable pageable) {
-
         return reservaRepository.findReservaByUsuarioId(idUsuario, pageable)
                 .map(ReservaResponseDTO::fromEntity);
     }
 
 
-
-
     @Transactional
     public ReservaResponseDTO atualizar(Long id, ReservaRequestDTO requestDTO) {
         Reserva reservaExistente = reservaRepository.findById(id)
-                .orElseThrow(() -> new ReservaNaoEncontradaException("Reserva não encontrada com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Reserva não encontrada com ID: " + id));
 
         reservaExistente.setDataInicio(requestDTO.dataInicio());
         reservaExistente.setDataFim(requestDTO.dataFim());
@@ -95,7 +87,7 @@ public class ReservaService {
     @Transactional
     public void deletar(Long id) {
         if (!reservaRepository.existsById(id)) {
-            throw new ReservaNaoEncontradaException("Reserva não encontrada com ID: " + id);
+            throw new RecursoNaoEncontradoException("Reserva não encontrada com ID: " + id);
         }
         reservaRepository.deleteById(id);
     }

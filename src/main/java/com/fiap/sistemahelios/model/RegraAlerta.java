@@ -1,7 +1,18 @@
 package com.fiap.sistemahelios.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "regra_alerta")
+@Schema(
+        name = "Regra Alerta",
+        description = "Representa uma regra para ativar um alerta no sistema Helios"
+)
 public class RegraAlerta {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tipoSensor;
     private Double valorMinimo;

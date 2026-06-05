@@ -49,21 +49,13 @@ public class ModuloHabitacional {
     @Column(name = "nivel_risco", nullable = false, length = 20)
     private String nivelRisco;
 
-    @NotNull(message = "Consumo de energia é obrigatório")
-    @PositiveOrZero(message = "O consumo de energia não pode ser negativo")
-    @Column(name = "consumo_energia", nullable = false)
-    private Double consumoEnergia;
-
-    @NotNull(message = "Consumo de água é obrigatório")
-    @PositiveOrZero(message = "O consumo de água não pode ser negativo")
-    @Column(name = "consumo_agua", nullable = false)
-    private Double consumoAgua;
+    private String indiceRisco;
 
 
     public ModuloHabitacional() {
     }
 
-    public ModuloHabitacional(Habitat habitat, String nomeModulo, String tipoModulo, Integer capacidadeOcupantes, Integer capacidadeAtual, String statusModulo, String nivelRisco, Double consumoEnergia, Double consumoAgua) {
+    public ModuloHabitacional(Habitat habitat, String nomeModulo, String tipoModulo, Integer capacidadeOcupantes, Integer capacidadeAtual, String statusModulo, String nivelRisco, String indiceRisco) {
         this.habitat = habitat;
         this.nomeModulo = nomeModulo;
         this.tipoModulo = tipoModulo;
@@ -71,8 +63,7 @@ public class ModuloHabitacional {
         this.capacidadeAtual = capacidadeAtual;
         this.statusModulo = statusModulo;
         this.nivelRisco = nivelRisco;
-        this.consumoEnergia = consumoEnergia;
-        this.consumoAgua = consumoAgua;
+        this.indiceRisco = indiceRisco;
     }
 
     public Long getId() {
@@ -139,19 +130,11 @@ public class ModuloHabitacional {
         this.nivelRisco = nivelRisco;
     }
 
-    public Double getConsumoEnergia() {
-        return consumoEnergia;
+    public String getIndiceRisco() {
+        return indiceRisco;
     }
 
-    public void setConsumoEnergia(Double consumoEnergia) {
-        this.consumoEnergia = consumoEnergia;
-    }
-
-    public Double getConsumoAgua() {
-        return consumoAgua;
-    }
-
-    public void setConsumoAgua(Double consumoAgua) {
-        this.consumoAgua = consumoAgua;
+    public void setIndiceRisco(String indiceRisco) {
+        this.indiceRisco = indiceRisco;
     }
 }

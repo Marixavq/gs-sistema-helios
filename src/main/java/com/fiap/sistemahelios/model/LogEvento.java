@@ -1,10 +1,19 @@
 package com.fiap.sistemahelios.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class LogEvento {
 
-    private Long idLog;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String tipoEvento;
     private String descricao;
     private LocalDateTime dataHoraEvento;
@@ -14,8 +23,7 @@ public class LogEvento {
     public LogEvento() {
     }
 
-    public LogEvento(Long idLog, String tipoEvento, String descricao, LocalDateTime dataHoraEvento, String origemEvento, String nivelEvento) {
-        this.idLog = idLog;
+    public LogEvento(String tipoEvento, String descricao, LocalDateTime dataHoraEvento, String origemEvento, String nivelEvento) {
         this.tipoEvento = tipoEvento;
         this.descricao = descricao;
         this.dataHoraEvento = dataHoraEvento;
@@ -23,12 +31,12 @@ public class LogEvento {
         this.nivelEvento = nivelEvento;
     }
 
-    public Long getIdLog() {
-        return idLog;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdLog(Long idLog) {
-        this.idLog = idLog;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTipoEvento() {

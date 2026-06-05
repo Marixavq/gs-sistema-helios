@@ -2,7 +2,7 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.HabitatRequestDTO;
 import com.fiap.sistemahelios.dto.HabitatResponseDTO;
-import com.fiap.sistemahelios.exception.HabitatNaoEncontradoException;
+import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Habitat;
 import com.fiap.sistemahelios.repository.HabitatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,6 @@ public class HabitatService {
         habitat.setCapacidadeTotal(requestDTO.capacidadeTotal());
         habitat.setStatusOperacional(requestDTO.statusOperacional());
 
-        habitatRepository.save(habitat);
-
         Habitat habitatSalvo = habitatRepository.save(habitat);
 
         return HabitatResponseDTO.fromEntity(habitatSalvo);
@@ -48,7 +46,7 @@ public class HabitatService {
     @Transactional(readOnly = true)
     public HabitatResponseDTO buscarPorId(Long id) {
         Habitat habitat = habitatRepository.findById(id)
-                .orElseThrow(() -> new HabitatNaoEncontradoException("Habitat não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Habitat não encontrado com ID: " + id));
         return HabitatResponseDTO.fromEntity(habitat);
     }
 
@@ -56,7 +54,7 @@ public class HabitatService {
     @Transactional
     public HabitatResponseDTO atualizar(Long id, HabitatRequestDTO requestDTO) {
         Habitat habitatExistente = habitatRepository.findById(id)
-                .orElseThrow(() -> new HabitatNaoEncontradoException("Habitat não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Habitat não encontrado com ID: " + id));
         habitatExistente.setNome(requestDTO.nome());
         habitatExistente.setLocalizacao(requestDTO.localizacao());
         habitatExistente.setTipoHabitat(requestDTO.tipoHabitat());
@@ -71,7 +69,7 @@ public class HabitatService {
     @Transactional
     public void deletar(Long id) {
         if (!habitatRepository.existsById(id)) {
-            throw new HabitatNaoEncontradoException("Habitat não encontrado com ID: " + id);
+            throw new RecursoNaoEncontradoException("Habitat não encontrado com ID: " + id);
         }
         habitatRepository.deleteById(id);
     }

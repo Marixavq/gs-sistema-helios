@@ -1,12 +1,27 @@
 package com.fiap.sistemahelios.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "alerta")
+@Schema(
+        name = "Alerta",
+        description = "Representa um alerta no sistema Helios"
+)
 public class Alerta {
 
-    private Long idAlerta;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
     private ModuloHabitacional modulo;
+    @ManyToOne
     private Sensor sensor;
+
     private String tipoAlerta;
     private String mensagem;
     private String nivelCriticidade;
@@ -16,8 +31,7 @@ public class Alerta {
     public Alerta() {
     }
 
-    public Alerta(Long idAlerta, ModuloHabitacional modulo, Sensor sensor, String tipoAlerta, String mensagem, String nivelCriticidade, LocalDateTime dataHoraAlerta, String statusAlerta) {
-        this.idAlerta = idAlerta;
+    public Alerta(ModuloHabitacional modulo, Sensor sensor, String tipoAlerta, String mensagem, String nivelCriticidade, LocalDateTime dataHoraAlerta, String statusAlerta) {
         this.modulo = modulo;
         this.sensor = sensor;
         this.tipoAlerta = tipoAlerta;
@@ -27,12 +41,12 @@ public class Alerta {
         this.statusAlerta = statusAlerta;
     }
 
-    public Long getIdAlerta() {
-        return idAlerta;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdAlerta(Long idAlerta) {
-        this.idAlerta = idAlerta;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public ModuloHabitacional getModulo() {

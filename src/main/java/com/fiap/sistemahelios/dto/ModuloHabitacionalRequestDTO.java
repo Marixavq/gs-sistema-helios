@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.PositiveOrZero;
 
 public record ModuloHabitacionalRequestDTO (
 
@@ -65,23 +64,7 @@ public record ModuloHabitacionalRequestDTO (
     )
     String nivelRisco,
 
-    @NotNull(message = "Consumo de energia é obrigatório")
-    @PositiveOrZero(message = "O consumo de energia não pode ser negativo")
-    @Column(name = "consumo_energia", nullable = false)
-    @Schema(
-            description = "Consumo de energia ",
-            example = "1250.5"
-    )
-    Double consumoEnergia,
-
-    @NotNull(message = "Consumo de água é obrigatório")
-    @PositiveOrZero(message = "O consumo de água não pode ser negativo")
-    @Column(name = "consumo_agua", nullable = false)
-    @Schema(
-            description = "Consumo de água",
-            example = "780.0"
-    )
-    Double consumoAgua
+    String indiceRisco
 
 ) {
 }

@@ -12,7 +12,6 @@ public record SensorRequestDTO (
         String unidadeMedida,
         Double limiteMinimo,
         Double limiteMaximo,
-        LocalDate dataInstalacao
-
+        Integer intervaloLeituraSegundos
 ) {
 }

@@ -11,8 +11,8 @@ public record ModuloHabitacionalResponseDTO(
         Integer capacidadeAtual,
         String statusModulo,
         String nivelRisco,
-        Double consumoEnergia,
-        Double consumoAgua
+        String indiceRisco
+
 
 ) {
 
@@ -26,8 +26,7 @@ public record ModuloHabitacionalResponseDTO(
                 moduloHabitacional.getCapacidadeAtual(),
                 moduloHabitacional.getStatusModulo(),
                 moduloHabitacional.getNivelRisco(),
-                moduloHabitacional.getConsumoEnergia(),
-                moduloHabitacional.getConsumoAgua()
+                moduloHabitacional.getIndiceRisco()
         );
     }
 }

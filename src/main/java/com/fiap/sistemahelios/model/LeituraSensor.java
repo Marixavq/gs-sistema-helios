@@ -1,10 +1,23 @@
 package com.fiap.sistemahelios.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "leitura_sensor")
+@Schema(
+        name = "Leitura Sensor",
+        description = "Representa uma leitura do sensor no sistema Helios"
+)
 public class LeituraSensor {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
     private Sensor sensor;
     private Double valorLeitura;
     private LocalDateTime dataHoraLeitura;

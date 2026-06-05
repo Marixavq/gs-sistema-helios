@@ -1,8 +1,8 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.*;
-import com.fiap.sistemahelios.exception.*;
-import com.fiap.sistemahelios.model.Habitat;
+import com.fiap.sistemahelios.dto.SensorRequestDTO;
+import com.fiap.sistemahelios.dto.SensorResponseDTO;
+import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
 import com.fiap.sistemahelios.model.Sensor;
 import com.fiap.sistemahelios.repository.ModuloHabitacionalRepository;
@@ -30,7 +30,7 @@ public class SensorService {
     public SensorResponseDTO salvar(SensorRequestDTO requestDTO) {
 
         ModuloHabitacional moduloHabitacional = moduloHabitacionalRepository.findById(requestDTO.idModulo())
-                .orElseThrow(() -> new ModuloHabitacionalNaoEncontradoException("ModuloHabitacional não encontrado com ID: " + requestDTO.idModulo()));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("ModuloHabitacional não encontrado com ID: " + requestDTO.idModulo()));
 
         Sensor sensor = new Sensor();
         sensor.setModulo(moduloHabitacional);
@@ -40,9 +40,8 @@ public class SensorService {
         sensor.setUnidadeMedida(requestDTO.unidadeMedida());
         sensor.setLimiteMinimo(requestDTO.limiteMinimo());
         sensor.setLimiteMaximo(requestDTO.limiteMaximo());
+        sensor.setIntervaloLeituraSegundos(requestDTO.in);
         sensor.setDataInstalacao(requestDTO.dataInstalacao());
-
-        sensorRepository.save(sensor);
 
         Sensor sensorSalvo = sensorRepository.save(sensor);
 
@@ -60,15 +59,14 @@ public class SensorService {
     @Transactional(readOnly = true)
     public SensorResponseDTO buscarPorId(Long id) {
         Sensor sensor = sensorRepository.findById(id)
-                .orElseThrow(() -> new SensorNaoEncontradoException("Sensor não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + id));
         return SensorResponseDTO.fromEntity(sensor);
     }
 
     @Transactional
     public SensorResponseDTO atualizar(Long id, SensorRequestDTO requestDTO) {
         Sensor sensorExistente = sensorRepository.findById(id)
-                .orElseThrow(() -> new SensorNaoEncontradoException("Sensor não encontrado com ID: " + id));
-
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + id));
 
         sensorExistente.setNomeSensor(requestDTO.nomeSensor());
         sensorExistente.setTipoSensor(requestDTO.tipoSensor());
@@ -86,7 +84,7 @@ public class SensorService {
     @Transactional
     public void deletar(Long id) {
         if (!sensorRepository.existsById(id)) {
-            throw new SensorNaoEncontradoException("Sensor não encontrado com ID: " + id);
+            throw new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + id);
         }
         sensorRepository.deleteById(id);
     }

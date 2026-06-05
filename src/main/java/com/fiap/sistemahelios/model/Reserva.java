@@ -15,7 +15,6 @@ import java.time.LocalDate;
 )
 public class Reserva {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(

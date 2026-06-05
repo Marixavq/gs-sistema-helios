@@ -1,8 +1,8 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.HabitatRequestDTO;
-import com.fiap.sistemahelios.dto.HabitatResponseDTO;
-import com.fiap.sistemahelios.service.HabitatService;
+import com.fiap.sistemahelios.dto.AlertaRequestDTO;
+import com.fiap.sistemahelios.dto.AlertaResponseDTO;
+import com.fiap.sistemahelios.service.AlertaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,46 +20,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/habitats")
-@Tag(name = "Habitat", description = "Endpoints para gerenciamento de habitats")
+@RequestMapping("/api/alertas")
+@Tag(name = "Alerta", description = "Endpoints para gerenciamento de alertas")
 
-public class HabitatController {
+public class AlertaController {
 
     @Autowired
-    private HabitatService habitatService;
+    private AlertaService alertaService;
 
     @PostMapping
     @Operation(
-            summary = "Criar habitat",
-            description = "Cadastra um novo habitat no sistema."
+            summary = "Criar alerta",
+            description = "Cadastra um novo alerta no sistema."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Habitat cadastrado com sucesso"
+                    description = "alerta cadastrado com sucesso"
             ),
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados inválidos"
             )
     })
-    public ResponseEntity<HabitatResponseDTO> criar(@Valid @RequestBody HabitatRequestDTO requestDTO) {
-        HabitatResponseDTO novoHabitat = habitatService.salvar(requestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoHabitat);
+    public ResponseEntity<AlertaResponseDTO> criar(@Valid @RequestBody AlertaRequestDTO requestDTO) {
+        AlertaResponseDTO novoAlerta = alertaService.salvar(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoAlerta);
     }
 
     @GetMapping
     @Operation(
             summary = "Listar habitats",
-            description = "Retorna uma lista completa de todos os habitats cadastrados."
+            description = "Retorna uma lista completa de todos os alertas cadastrados."
     )
     @ApiResponse(
             responseCode = "200",
-            description = "Lista de habitats retornada com sucesso",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = HabitatResponseDTO.class)
+            description = "Lista de alertas retornada com sucesso",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AlertaResponseDTO.class)
             )
     )
-    public ResponseEntity<Page<HabitatResponseDTO>> listarTodos(
+    public ResponseEntity<Page<AlertaResponseDTO>> listarTodos(
             @PageableDefault(
                     page = 0,
                     size = 10,
@@ -67,71 +67,70 @@ public class HabitatController {
                     direction = Sort.Direction.ASC
             ) Pageable pageable
     ) {
-        Page<HabitatResponseDTO> habitats = habitatService.listarTodos(pageable);
-        return ResponseEntity.ok(habitats);
+        Page<AlertaResponseDTO> alertas = alertaService.listarTodos(pageable);
+        return ResponseEntity.ok(alertas);
     }
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Buscar habitat por ID",
-            description = "Retorna um habitat específico baseado no ID."
+            summary = "Buscar alerta por ID",
+            description = "Retorna um alerta específico baseado no ID."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Habitat encontrado com sucesso"
+                    description = "alerta encontrado com sucesso"
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Habitat não encontrado"
+                    description = "alerta não encontrado"
             )
     })
-    public ResponseEntity<HabitatResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(habitatService.buscarPorId(id));
+    public ResponseEntity<AlertaResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(alertaService.buscarPorId(id));
     }
 
 
     @PutMapping("/{id}")
     @Operation(
-            summary = "Atualizar habitat",
-            description = "Atualiza os dados de um habitat existente."
+            summary = "Atualizar alerta",
+            description = "Atualiza os dados de um alerta existente."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Habitat atualizado com sucesso"
+                    description = "alerta atualizado com sucesso"
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Habitat não encontrado"
+                    description = "alerta não encontrado"
             ),
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados inválidos"
             )
     })
-    public ResponseEntity<HabitatResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody HabitatRequestDTO requestDTO) {
-        return ResponseEntity.ok(habitatService.atualizar(id, requestDTO));
+    public ResponseEntity<AlertaResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody AlertaRequestDTO requestDTO) {
+        return ResponseEntity.ok(alertaService.atualizar(id, requestDTO));
     }
 
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Deletar habitat",
-            description = "Remove um habitat do sistema baseado no ID."
+            summary = "Deletar alerta",
+            description = "Remove um alerta do sistema baseado no ID."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "204",
-                    description = "Habitat removido com sucesso"
+                    description = "alerta removido com sucesso"
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Habitat não encontrado"
+                    description = "alerta não encontrado"
             )
     })
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        habitatService.deletar(id);
+        alertaService.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
 }

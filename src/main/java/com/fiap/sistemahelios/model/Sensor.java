@@ -1,10 +1,24 @@
 package com.fiap.sistemahelios.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "sensor")
+@Schema(
+        name = "Sensor",
+        description = "Representa um sensor no sistema Helios"
+)
 public class Sensor {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "id_modulo")
     private ModuloHabitacional modulo;
     private String nomeSensor;
     private String tipoSensor;
@@ -18,7 +32,7 @@ public class Sensor {
     public Sensor() {
     }
 
-    public Sensor(ModuloHabitacional modulo, String nomeSensor, String tipoSensor, String statusSensor, String unidadeMedida, Double limiteMinimo, Double limiteMaximo, Integer intervaloLeituraSegundos, LocalDate dataInstalacao) {
+    public Sensor(ModuloHabitacional modulo, String nomeSensor, String tipoSensor, String statusSensor, String unidadeMedida, Double limiteMinimo, Double limiteMaximo, Integer intervaloLeituraSegundos) {
         this.modulo = modulo;
         this.nomeSensor = nomeSensor;
         this.tipoSensor = tipoSensor;
@@ -27,7 +41,6 @@ public class Sensor {
         this.limiteMinimo = limiteMinimo;
         this.limiteMaximo = limiteMaximo;
         this.intervaloLeituraSegundos = intervaloLeituraSegundos;
-        this.dataInstalacao = dataInstalacao;
     }
 
     public Long getId() {
@@ -108,5 +121,10 @@ public class Sensor {
 
     public void setDataInstalacao(LocalDate dataInstalacao) {
         this.dataInstalacao = dataInstalacao;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataInstalacao = LocalDate.now();
     }
 }

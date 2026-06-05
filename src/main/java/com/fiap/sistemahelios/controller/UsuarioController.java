@@ -67,8 +67,8 @@ public class UsuarioController {
                     direction = Sort.Direction.ASC
             ) Pageable pageable
     ) {
-        Page<UsuarioResponseDTO> users = usuarioService.listarTodos(pageable);
-        return ResponseEntity.ok(users);
+        Page<UsuarioResponseDTO> usuarios = usuarioService.listarTodos(pageable);
+        return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")

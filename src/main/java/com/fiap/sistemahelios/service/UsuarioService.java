@@ -2,7 +2,7 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.UsuarioRequestDTO;
 import com.fiap.sistemahelios.dto.UsuarioResponseDTO;
-import com.fiap.sistemahelios.exception.UsuarioNaoEncontradoException;
+import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.exception.ValidacaoException;
 import com.fiap.sistemahelios.model.Usuario;
 import com.fiap.sistemahelios.repository.UsuarioRepository;
@@ -33,11 +33,8 @@ public class UsuarioService {
         usuario.setEmail(requestDTO.email());
         usuario.setSenha(requestDTO.senha());
         usuario.setTipoUsuario(requestDTO.tipoUsuario());
-
         usuario.setStatusUsuario("Ativo");
         usuario.setNivelAcesso(1);
-
-        usuarioRepository.save(usuario);
 
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
@@ -54,21 +51,21 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public UsuarioResponseDTO buscarPorId(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado com ID: " + id));
         return UsuarioResponseDTO.fromEntity(usuario);
     }
 
     @Transactional(readOnly = true)
     public UsuarioResponseDTO buscarPorEmail(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado com email: " + email));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado com email: " + email));
         return UsuarioResponseDTO.fromEntity(usuario);
     }
 
     @Transactional
     public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO requestDTO) {
         Usuario usuarioExistente = usuarioRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado com ID: " + id));
         usuarioExistente.setNome(requestDTO.nome());
         usuarioExistente.setEmail(requestDTO.email());
         usuarioExistente.setSenha(requestDTO.senha());
@@ -82,7 +79,7 @@ public class UsuarioService {
     @Transactional
     public void deletar(Long id) {
         if (!usuarioRepository.existsById(id)) {
-            throw new UsuarioNaoEncontradoException("Usuário não encontrado com ID: " + id);
+            throw new RecursoNaoEncontradoException("Usuário não encontrado com ID: " + id);
         }
         usuarioRepository.deleteById(id);
     }

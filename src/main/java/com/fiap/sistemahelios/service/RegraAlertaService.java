@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 import com.fiap.sistemahelios.dto.RegraAlertaRequestDTO;
 import com.fiap.sistemahelios.dto.RegraAlertaResponseDTO;
-import com.fiap.sistemahelios.exception.RegraAlertaNaoEncontradoException;
+import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.RegraAlerta;
 import com.fiap.sistemahelios.repository.RegraAlertaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,6 @@ public class RegraAlertaService {
         regraAlerta.setMensagemPadrao(requestDTO.mensagemPadrao());
         regraAlerta.setAtivo(requestDTO.ativo());
 
-        regraAlertaRepository.save(regraAlerta);
-
         RegraAlerta regraAlertaSalvo = regraAlertaRepository.save(regraAlerta);
 
         return RegraAlertaResponseDTO.fromEntity(regraAlertaSalvo);
@@ -50,14 +48,14 @@ public class RegraAlertaService {
     @Transactional(readOnly = true)
     public RegraAlertaResponseDTO buscarPorId(Long id) {
         RegraAlerta regraAlerta = regraAlertaRepository.findById(id)
-                .orElseThrow(() -> new RegraAlertaNaoEncontradoException("RegraAlerta não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("RegraAlerta não encontrado com ID: " + id));
         return RegraAlertaResponseDTO.fromEntity(regraAlerta);
     }
 
     @Transactional
     public RegraAlertaResponseDTO atualizar(Long id, RegraAlertaRequestDTO requestDTO) {
         RegraAlerta regraAlertaExistente = regraAlertaRepository.findById(id)
-                .orElseThrow(() -> new RegraAlertaNaoEncontradoException("RegraAlerta não encontrado com ID: " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("RegraAlerta não encontrado com ID: " + id));
 
         regraAlertaExistente.setTipoSensor(requestDTO.tipoSensor());
         regraAlertaExistente.setValorMinimo(requestDTO.valorMinimo());
@@ -74,7 +72,7 @@ public class RegraAlertaService {
     @Transactional
     public void deletar(Long id) {
         if (!regraAlertaRepository.existsById(id)) {
-            throw new RegraAlertaNaoEncontradoException("RegraAlerta não encontrado com ID: " + id);
+            throw new RecursoNaoEncontradoException("RegraAlerta não encontrado com ID: " + id);
         }
         regraAlertaRepository.deleteById(id);
     }

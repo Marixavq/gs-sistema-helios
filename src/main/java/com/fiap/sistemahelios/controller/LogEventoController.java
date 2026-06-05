@@ -1,8 +1,8 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.HabitatRequestDTO;
-import com.fiap.sistemahelios.dto.HabitatResponseDTO;
-import com.fiap.sistemahelios.service.HabitatService;
+import com.fiap.sistemahelios.dto.LogEventoRequestDTO;
+import com.fiap.sistemahelios.dto.LogEventoResponseDTO;
+import com.fiap.sistemahelios.service.LogEventoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,43 +23,43 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/habitats")
 @Tag(name = "Habitat", description = "Endpoints para gerenciamento de habitats")
 
-public class HabitatController {
+public class LogEventoController {
 
     @Autowired
-    private HabitatService habitatService;
+    private LogEventoService logEventoService;
 
     @PostMapping
     @Operation(
-            summary = "Criar habitat",
-            description = "Cadastra um novo habitat no sistema."
+            summary = "Criar LogEvento",
+            description = "Cadastra um novo LogEvento no sistema."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Habitat cadastrado com sucesso"
+                    description = "LogEvento cadastrado com sucesso"
             ),
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados inválidos"
             )
     })
-    public ResponseEntity<HabitatResponseDTO> criar(@Valid @RequestBody HabitatRequestDTO requestDTO) {
-        HabitatResponseDTO novoHabitat = habitatService.salvar(requestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoHabitat);
+    public ResponseEntity<LogEventoResponseDTO> criar(@Valid @RequestBody LogEventoRequestDTO requestDTO) {
+        LogEventoResponseDTO novoLogEvento = logEventoService.salvar(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoLogEvento);
     }
 
     @GetMapping
     @Operation(
-            summary = "Listar habitats",
-            description = "Retorna uma lista completa de todos os habitats cadastrados."
+            summary = "Listar LogEvento",
+            description = "Retorna uma lista completa de todos os LogEvento cadastrados."
     )
     @ApiResponse(
             responseCode = "200",
-            description = "Lista de habitats retornada com sucesso",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = HabitatResponseDTO.class)
+            description = "Lista de LogEvento retornada com sucesso",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = LogEventoResponseDTO.class)
             )
     )
-    public ResponseEntity<Page<HabitatResponseDTO>> listarTodos(
+    public ResponseEntity<Page<LogEventoResponseDTO>> listarTodos(
             @PageableDefault(
                     page = 0,
                     size = 10,
@@ -67,70 +67,70 @@ public class HabitatController {
                     direction = Sort.Direction.ASC
             ) Pageable pageable
     ) {
-        Page<HabitatResponseDTO> habitats = habitatService.listarTodos(pageable);
-        return ResponseEntity.ok(habitats);
+        Page<LogEventoResponseDTO> logs = logEventoService.listarTodos(pageable);
+        return ResponseEntity.ok(logs);
     }
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Buscar habitat por ID",
-            description = "Retorna um habitat específico baseado no ID."
+            summary = "Buscar LogEvento por ID",
+            description = "Retorna um LogEvento específico baseado no ID."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Habitat encontrado com sucesso"
+                    description = "LogEvento encontrado com sucesso"
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Habitat não encontrado"
+                    description = "LogEvento não encontrado"
             )
     })
-    public ResponseEntity<HabitatResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(habitatService.buscarPorId(id));
+    public ResponseEntity<LogEventoResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(logEventoService.buscarPorId(id));
     }
 
 
     @PutMapping("/{id}")
     @Operation(
-            summary = "Atualizar habitat",
-            description = "Atualiza os dados de um habitat existente."
+            summary = "Atualizar LogEvento",
+            description = "Atualiza os dados de um LogEvento existente."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Habitat atualizado com sucesso"
+                    description = "LogEvento atualizado com sucesso"
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Habitat não encontrado"
+                    description = "LogEvento não encontrado"
             ),
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados inválidos"
             )
     })
-    public ResponseEntity<HabitatResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody HabitatRequestDTO requestDTO) {
-        return ResponseEntity.ok(habitatService.atualizar(id, requestDTO));
+    public ResponseEntity<LogEventoResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody LogEventoRequestDTO requestDTO) {
+        return ResponseEntity.ok(logEventoService.atualizar(id, requestDTO));
     }
 
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Deletar habitat",
-            description = "Remove um habitat do sistema baseado no ID."
+            summary = "Deletar LogEvento",
+            description = "Remove um LogEvento do sistema baseado no ID."
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "204",
-                    description = "Habitat removido com sucesso"
+                    description = "LogEvento removido com sucesso"
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Habitat não encontrado"
+                    description = "LogEvento não encontrado"
             )
     })
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        habitatService.deletar(id);
+        logEventoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -66,8 +66,8 @@ public class RegraAlertaController {
                     direction = Sort.Direction.ASC
             ) Pageable pageable
     ) {
-        Page<RegraAlertaResponseDTO> ocupantes = regraAlertaService.listarTodos(pageable);
-        return ResponseEntity.ok(ocupantes);
+        Page<RegraAlertaResponseDTO> regras = regraAlertaService.listarTodos(pageable);
+        return ResponseEntity.ok(regras);
     }
 
     @GetMapping("/{id}")
