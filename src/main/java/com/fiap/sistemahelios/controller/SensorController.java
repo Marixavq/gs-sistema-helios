@@ -95,7 +95,6 @@ public class SensorController {
         return ResponseEntity.ok(sensorService.buscarPorId(id));
     }
 
-
     @PutMapping("/{id}")
     @Operation(
 

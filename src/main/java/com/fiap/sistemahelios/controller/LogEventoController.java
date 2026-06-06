@@ -20,8 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/habitats")
-@Tag(name = "Habitat", description = "Endpoints para gerenciamento de habitats")
+@RequestMapping("/api/logs")
+@Tag(name = "LogEvento", description = "Endpoints para gerenciamento de LogEvento")
 
 public class LogEventoController {
 

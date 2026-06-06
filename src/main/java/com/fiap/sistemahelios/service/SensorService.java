@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 public class SensorService {
@@ -40,8 +42,7 @@ public class SensorService {
         sensor.setUnidadeMedida(requestDTO.unidadeMedida());
         sensor.setLimiteMinimo(requestDTO.limiteMinimo());
         sensor.setLimiteMaximo(requestDTO.limiteMaximo());
-        sensor.setIntervaloLeituraSegundos(requestDTO.in);
-        sensor.setDataInstalacao(requestDTO.dataInstalacao());
+        sensor.setIntervaloLeituraSegundos(requestDTO.intervaloLeituraSegundos());
 
         Sensor sensorSalvo = sensorRepository.save(sensor);
 
@@ -63,6 +64,15 @@ public class SensorService {
         return SensorResponseDTO.fromEntity(sensor);
     }
 
+    @Transactional(readOnly = true)
+    public Page<SensorResponseDTO> buscarSensoresPorModulo(Long idModulo, Pageable pageable) {
+        ModuloHabitacional moduloHabitacional = moduloHabitacionalRepository.findById(idModulo)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("ModuloHabitacional não encontrado com ID: " + idModulo));
+
+        return sensorRepository.findByModuloIdModulo(idModulo,pageable)
+                .map(SensorResponseDTO::fromEntity);
+    }
+
     @Transactional
     public SensorResponseDTO atualizar(Long id, SensorRequestDTO requestDTO) {
         Sensor sensorExistente = sensorRepository.findById(id)
@@ -74,7 +84,7 @@ public class SensorService {
         sensorExistente.setUnidadeMedida(requestDTO.unidadeMedida());
         sensorExistente.setLimiteMinimo(requestDTO.limiteMinimo());
         sensorExistente.setLimiteMaximo(requestDTO.limiteMaximo());
-        sensorExistente.setDataInstalacao(requestDTO.dataInstalacao());
+        sensorExistente.setIntervaloLeituraSegundos(requestDTO.intervaloLeituraSegundos());
 
         Sensor sensorAtualizado = sensorRepository.save(sensorExistente);
 
