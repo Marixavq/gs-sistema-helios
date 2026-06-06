@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.OcupanteRequestDTO;
-import com.fiap.sistemahelios.dto.OcupanteResponseDTO;
+import com.fiap.sistemahelios.dto.request.OcupanteRequestDTO;
+import com.fiap.sistemahelios.dto.response.OcupanteResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Ocupante;
 import com.fiap.sistemahelios.repository.OcupanteRepository;

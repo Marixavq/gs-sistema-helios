@@ -1,4 +1,4 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.response;
 
 import com.fiap.sistemahelios.model.Reserva;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public record ReservaResponseDTO(
 
             Long id,
-            String nomeUsuario,
+            String nomeOcupante,
             String nomeModulo,
             LocalDate dataInicio,
             LocalDate dataFim,
@@ -18,7 +18,7 @@ public record ReservaResponseDTO(
         public static ReservaResponseDTO fromEntity (Reserva reserva){
         return new ReservaResponseDTO(
                 reserva.getId(),
-                reserva.getUsuario().getNome(),
+                reserva.getOcupante().getNome(),
                 reserva.getModulo().getNomeModulo(),
                 reserva.getDataInicio(),
                 reserva.getDataFim(),

@@ -1,7 +1,4 @@
-package com.fiap.sistemahelios.dto;
-
-
-import java.time.LocalDate;
+package com.fiap.sistemahelios.dto.request;
 
 public record SensorRequestDTO (
 

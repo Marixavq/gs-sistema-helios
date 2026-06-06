@@ -1,8 +1,6 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.response;
 
 import com.fiap.sistemahelios.model.Ocupante;
-import com.fiap.sistemahelios.model.Reserva;
-import jakarta.persistence.Column;
 
 import java.time.LocalDate;
 

@@ -1,10 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.ReservaRequestDTO;
-import com.fiap.sistemahelios.dto.ReservaResponseDTO;
-import com.fiap.sistemahelios.dto.SensorRequestDTO;
-import com.fiap.sistemahelios.dto.SensorResponseDTO;
-import com.fiap.sistemahelios.service.ReservaService;
+import com.fiap.sistemahelios.dto.request.SensorRequestDTO;
+import com.fiap.sistemahelios.dto.response.SensorResponseDTO;
 import com.fiap.sistemahelios.service.SensorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -93,6 +90,34 @@ public class SensorController {
     })
     public ResponseEntity<SensorResponseDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(sensorService.buscarPorId(id));
+    }
+
+    //buscarSensoresPorModulo
+    @GetMapping("/modulo/{idModulo}")
+    @Operation(
+            summary = "Buscar sensor por ID do módulo",
+            description = "Retorna sensores específico baseado no ID do módulo"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Sensores encontrado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Sensores não encontrado"
+            )
+    })
+    public ResponseEntity<Page<SensorResponseDTO>> buscarSensoresPorModulo(
+            @PathVariable Long idModulo,
+            @PageableDefault(
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
+            ) {
+        Page<SensorResponseDTO> sensoresModulo = sensorService.buscarSensoresPorModulo(idModulo, pageable);
+        return ResponseEntity.ok(sensoresModulo);
     }
 
     @PutMapping("/{id}")

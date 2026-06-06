@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.LeituraSensorRequestDTO;
-import com.fiap.sistemahelios.dto.LeituraSensorResponseDTO;
+import com.fiap.sistemahelios.dto.request.LeituraSensorRequestDTO;
+import com.fiap.sistemahelios.dto.response.LeituraSensorResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.LeituraSensor;
 import com.fiap.sistemahelios.model.Sensor;
@@ -54,6 +54,15 @@ public class LeituraSensorService {
         LeituraSensor leituraSensor = leituraSensorRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("LeituraSensor não encontrado com ID: " + id));
         return LeituraSensorResponseDTO.fromEntity(leituraSensor);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<LeituraSensorResponseDTO> buscarLeiturasPorSensor(Long idSensor, Pageable pageable) {
+        sensorRepository.findById(idSensor)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + idSensor));
+
+        return leituraSensorRepository.findBySensor_Id(idSensor, pageable)
+                .map(LeituraSensorResponseDTO::fromEntity);
     }
 
 

@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.ReservaRequestDTO;
-import com.fiap.sistemahelios.dto.ReservaResponseDTO;
+import com.fiap.sistemahelios.dto.request.ReservaRequestDTO;
+import com.fiap.sistemahelios.dto.response.ReservaResponseDTO;
 import com.fiap.sistemahelios.service.ReservaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -91,11 +91,11 @@ public class ReservaController {
     }
 
 
-    //http://localhost:8080/api/reservas/usuario/1
-    @GetMapping("/usuario/{idUsuario}")
+    //http://localhost:8080/api/reservas/ocupante/1
+    @GetMapping("/ocupante/{idOcupante}")
     @Operation(
-            summary = "Buscar reservas por usuário",
-            description = "Retorna todos as reservas associados a um usuário específico."
+            summary = "Buscar reservas por ocupante",
+            description = "Retorna todos as reservas associados a um ocupante específico."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -107,8 +107,8 @@ public class ReservaController {
                     description = "Reserva não encontrada"
             )
     })
-    public ResponseEntity<Page<ReservaResponseDTO>> buscarReservaPorIdUsuario(
-            @PathVariable Long idUsuario,
+    public ResponseEntity<Page<ReservaResponseDTO>> buscarReservasPorOcupante(
+            @PathVariable Long idOcupante,
 
             @PageableDefault(
                     size = 10,
@@ -116,9 +116,40 @@ public class ReservaController {
                     direction = Sort.Direction.ASC
             ) Pageable pageable
     ) {
-        Page<ReservaResponseDTO> reservas = reservaService.buscarReservaPorIdUsuario(idUsuario, pageable);
-        return ResponseEntity.ok(reservas);
+        Page<ReservaResponseDTO> reservasOcupante = reservaService.buscarReservasPorOcupante(idOcupante, pageable);
+        return ResponseEntity.ok(reservasOcupante);
     }
+
+
+    //buscarReservasPorModulo
+    @GetMapping("/modulo/{idModulo}")
+    @Operation(
+            summary = "Buscar reservas por modulo",
+            description = "Retorna todos as reservas associados a um modulo específico."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Reservas encontrados com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Reserva não encontrada"
+            )
+    })
+    public ResponseEntity<Page<ReservaResponseDTO>> buscarReservasPorModulo(
+            @PathVariable Long idModulo,
+            @PageableDefault(
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
+    ) {
+        Page<ReservaResponseDTO> reservasModulo = reservaService.buscarReservasPorModulo(idModulo, pageable);
+        return ResponseEntity.ok(reservasModulo);
+    }
+
+
 
     @PutMapping("/{id}")
     @Operation(

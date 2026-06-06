@@ -1,17 +1,17 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.AlertaRequestDTO;
-import com.fiap.sistemahelios.dto.AlertaResponseDTO;
-import com.fiap.sistemahelios.dto.OcupanteRequestDTO;
-import com.fiap.sistemahelios.dto.OcupanteResponseDTO;
+import com.fiap.sistemahelios.dto.request.AlertaRequestDTO;
+import com.fiap.sistemahelios.dto.response.AlertaResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.*;
 import com.fiap.sistemahelios.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class AlertaService {
 
     private final AlertaRepository alertaRepository;
@@ -63,6 +63,27 @@ public class AlertaService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Alerta não encontrado com ID: " + id));
         return AlertaResponseDTO.fromEntity(alerta);
     }
+
+
+    @Transactional(readOnly = true)
+    public Page<AlertaResponseDTO> buscarAlertasPorModulo(Long idModulo, Pageable pageable) {
+       moduloHabitacionalRepository.findById(idModulo)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Modulo não encontrado com ID: " + idModulo));
+
+       return alertaRepository.findByModulo_Id(idModulo, pageable)
+                .map(AlertaResponseDTO::fromEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<AlertaResponseDTO> buscarAlertasPorSensor(Long idSensor, Pageable pageable) {
+       sensorRepository.findById(idSensor)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + idSensor));
+
+       return alertaRepository.findBySensor_Id(idSensor, pageable)
+                .map(AlertaResponseDTO::fromEntity);
+    }
+
+
 
     @Transactional
     public AlertaResponseDTO atualizar(Long id, AlertaRequestDTO requestDTO) {

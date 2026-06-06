@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.HabitatRequestDTO;
-import com.fiap.sistemahelios.dto.HabitatResponseDTO;
+import com.fiap.sistemahelios.dto.request.HabitatRequestDTO;
+import com.fiap.sistemahelios.dto.response.HabitatResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Habitat;
 import com.fiap.sistemahelios.repository.HabitatRepository;

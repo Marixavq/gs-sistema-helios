@@ -1,6 +1,6 @@
 package com.fiap.sistemahelios.service;
-import com.fiap.sistemahelios.dto.RegraAlertaRequestDTO;
-import com.fiap.sistemahelios.dto.RegraAlertaResponseDTO;
+import com.fiap.sistemahelios.dto.request.RegraAlertaRequestDTO;
+import com.fiap.sistemahelios.dto.response.RegraAlertaResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.RegraAlerta;
 import com.fiap.sistemahelios.repository.RegraAlertaRepository;

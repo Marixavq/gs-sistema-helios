@@ -1,15 +1,17 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.LogEventoRequestDTO;
-import com.fiap.sistemahelios.dto.LogEventoResponseDTO;
+import com.fiap.sistemahelios.dto.request.LogEventoRequestDTO;
+import com.fiap.sistemahelios.dto.response.LogEventoResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.LogEvento;
 import com.fiap.sistemahelios.repository.LogEventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class LogEventoService {
 
     private final LogEventoRepository logEventoRepository;

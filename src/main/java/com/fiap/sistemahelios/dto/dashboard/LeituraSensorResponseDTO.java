@@ -1,15 +1,14 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.dashboard;
 
 import com.fiap.sistemahelios.model.LeituraSensor;
-
-import java.time.LocalDateTime;
 
 public record LeituraSensorResponseDTO(
 
         Long id,
         String nomeSensor,
+        String tipoSensor,
         Double valorLeitura,
-        LocalDateTime dataHoraLeitura,
+        String unidadeMedida,
         String statusLeitura
 
 ) {
@@ -18,8 +17,9 @@ public record LeituraSensorResponseDTO(
         return new LeituraSensorResponseDTO(
                 leituraSensor.getId(),
                 leituraSensor.getSensor().getNomeSensor(),
+                leituraSensor.getSensor().getTipoSensor(),
                 leituraSensor.getValorLeitura(),
-                leituraSensor.getDataHoraLeitura(),
+                leituraSensor.getSensor().getUnidadeMedida(),
                 leituraSensor.getStatusLeitura()
 
         );

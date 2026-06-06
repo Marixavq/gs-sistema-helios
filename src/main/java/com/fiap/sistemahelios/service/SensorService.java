@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.SensorRequestDTO;
-import com.fiap.sistemahelios.dto.SensorResponseDTO;
+import com.fiap.sistemahelios.dto.request.SensorRequestDTO;
+import com.fiap.sistemahelios.dto.response.SensorResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
 import com.fiap.sistemahelios.model.Sensor;
@@ -12,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Service
@@ -66,10 +64,10 @@ public class SensorService {
 
     @Transactional(readOnly = true)
     public Page<SensorResponseDTO> buscarSensoresPorModulo(Long idModulo, Pageable pageable) {
-        ModuloHabitacional moduloHabitacional = moduloHabitacionalRepository.findById(idModulo)
+        moduloHabitacionalRepository.findById(idModulo)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("ModuloHabitacional não encontrado com ID: " + idModulo));
 
-        return sensorRepository.findByModuloIdModulo(idModulo,pageable)
+        return sensorRepository.findByModulo_Id(idModulo,pageable)
                 .map(SensorResponseDTO::fromEntity);
     }
 

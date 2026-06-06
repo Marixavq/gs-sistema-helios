@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.ModuloHabitacionalRequestDTO;
-import com.fiap.sistemahelios.dto.ModuloHabitacionalResponseDTO;
+import com.fiap.sistemahelios.dto.request.ModuloHabitacionalRequestDTO;
+import com.fiap.sistemahelios.dto.response.ModuloHabitacionalResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Habitat;
 import com.fiap.sistemahelios.model.ModuloHabitacional;

@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.RegraAlertaRequestDTO;
-import com.fiap.sistemahelios.dto.RegraAlertaResponseDTO;
+import com.fiap.sistemahelios.dto.request.RegraAlertaRequestDTO;
+import com.fiap.sistemahelios.dto.response.RegraAlertaResponseDTO;
 import com.fiap.sistemahelios.service.RegraAlertaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

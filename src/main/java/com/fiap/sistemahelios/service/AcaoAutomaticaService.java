@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.AcaoAutomaticaRequestDTO;
-import com.fiap.sistemahelios.dto.AcaoAutomaticaResponseDTO;
+import com.fiap.sistemahelios.dto.request.AcaoAutomaticaRequestDTO;
+import com.fiap.sistemahelios.dto.response.AcaoAutomaticaResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.AcaoAutomatica;
 import com.fiap.sistemahelios.model.Alerta;
@@ -10,8 +10,10 @@ import com.fiap.sistemahelios.repository.AlertaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class AcaoAutomaticaService {
 
     private final AcaoAutomaticaRepository acaoAutomaticaRepository;

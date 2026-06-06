@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.AlertaRequestDTO;
-import com.fiap.sistemahelios.dto.AlertaResponseDTO;
+import com.fiap.sistemahelios.dto.request.AlertaRequestDTO;
+import com.fiap.sistemahelios.dto.response.AlertaResponseDTO;
 import com.fiap.sistemahelios.service.AlertaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -89,6 +89,65 @@ public class AlertaController {
     public ResponseEntity<AlertaResponseDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(alertaService.buscarPorId(id));
     }
+
+
+    //buscarAlertasPorModulo
+    @GetMapping("/modulo/{idModulo}")
+    @Operation(
+            summary = "Buscar alertas por ID do modulo",
+            description = "Retorna alertas específicas baseado no ID do modulo"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Alertas encontrado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Alertas não encontrado"
+            )
+    })
+    public ResponseEntity<Page<AlertaResponseDTO>> buscarAlertasPorModulo(
+            @PathVariable Long idModulo,
+            @PageableDefault(
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
+    ) {
+        Page<AlertaResponseDTO> alertasModulo = alertaService.buscarAlertasPorModulo(idModulo, pageable);
+        return ResponseEntity.ok(alertasModulo);
+    }
+
+
+    //buscarAlertasPorSensor
+    @GetMapping("/sensor/{idSensor}")
+    @Operation(
+            summary = "Buscar alertas por ID do sensor",
+            description = "Retorna alertas específicas baseado no ID do sensor"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Alertas encontrado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Alertas não encontrado"
+            )
+    })
+    public ResponseEntity<Page<AlertaResponseDTO>> buscarAlertasPorSensor(
+            @PathVariable Long idSensor,
+            @PageableDefault(
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
+    ) {
+        Page<AlertaResponseDTO> alertasSensor = alertaService.buscarAlertasPorSensor(idSensor, pageable);
+        return ResponseEntity.ok(alertasSensor);
+    }
+
 
 
     @PutMapping("/{id}")

@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.LogEventoRequestDTO;
-import com.fiap.sistemahelios.dto.LogEventoResponseDTO;
+import com.fiap.sistemahelios.dto.request.LogEventoRequestDTO;
+import com.fiap.sistemahelios.dto.response.LogEventoResponseDTO;
 import com.fiap.sistemahelios.service.LogEventoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

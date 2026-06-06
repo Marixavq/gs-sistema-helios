@@ -1,4 +1,4 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.request;
 
 import java.time.LocalDateTime;
 

@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.LeituraSensorRequestDTO;
-import com.fiap.sistemahelios.dto.LeituraSensorResponseDTO;
+import com.fiap.sistemahelios.dto.request.LeituraSensorRequestDTO;
+import com.fiap.sistemahelios.dto.response.LeituraSensorResponseDTO;
 import com.fiap.sistemahelios.service.LeituraSensorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -89,6 +89,34 @@ public class LeituraSensorController {
         return ResponseEntity.ok(leituraSensorService.buscarPorId(id));
     }
 
+
+    //buscarLeiturasPorSensor
+    @GetMapping("/sensor/{idSensor}")
+    @Operation(
+            summary = "Buscar leituras por ID do sensor",
+            description = "Retorna leituras específicas baseado no ID do sensor"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Leituras encontrado com sucesso"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Leituras não encontrado"
+            )
+    })
+    public ResponseEntity<Page<LeituraSensorResponseDTO>> buscarPorSensor(
+            @PathVariable Long idSensor,
+            @PageableDefault(
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
+    ) {
+        Page<LeituraSensorResponseDTO> leiturasSensor = leituraSensorService.buscarLeiturasPorSensor(idSensor, pageable);
+        return ResponseEntity.ok(leiturasSensor);
+    }
 
     @PutMapping("/{id}")
     @Operation(

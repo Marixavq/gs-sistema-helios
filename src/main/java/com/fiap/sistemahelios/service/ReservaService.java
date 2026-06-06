@@ -1,14 +1,14 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.ReservaRequestDTO;
-import com.fiap.sistemahelios.dto.ReservaResponseDTO;
+import com.fiap.sistemahelios.dto.request.ReservaRequestDTO;
+import com.fiap.sistemahelios.dto.response.ReservaResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
+import com.fiap.sistemahelios.model.Ocupante;
 import com.fiap.sistemahelios.model.Reserva;
-import com.fiap.sistemahelios.model.Usuario;
 import com.fiap.sistemahelios.repository.ModuloHabitacionalRepository;
+import com.fiap.sistemahelios.repository.OcupanteRepository;
 import com.fiap.sistemahelios.repository.ReservaRepository;
-import com.fiap.sistemahelios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,26 +19,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final OcupanteRepository ocupanteRepository;
     private final ModuloHabitacionalRepository moduloHabitacionalRepository;
 
     @Autowired
-    public ReservaService(ReservaRepository reservaRepository, UsuarioRepository usuarioRepository, ModuloHabitacionalRepository moduloHabitacionalRepository) {
+    public ReservaService(ReservaRepository reservaRepository, OcupanteRepository ocupanteRepository, ModuloHabitacionalRepository moduloHabitacionalRepository) {
         this.reservaRepository = reservaRepository;
-        this.usuarioRepository = usuarioRepository;
+        this.ocupanteRepository = ocupanteRepository;
         this.moduloHabitacionalRepository = moduloHabitacionalRepository;
     }
 
     @Transactional
     public ReservaResponseDTO salvar(ReservaRequestDTO requestDTO) {
-        Usuario usuario = usuarioRepository.findById(requestDTO.idUsuario())
-                .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado com ID: " + requestDTO.idUsuario()));
+        Ocupante ocupante = ocupanteRepository.findById(requestDTO.idOcupante())
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + requestDTO.idOcupante()));
 
         ModuloHabitacional modulo = moduloHabitacionalRepository.findById(requestDTO.idModulo())
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Módulo não encontrado com ID: " + requestDTO.idModulo()));
 
         Reserva reserva = new Reserva();
-        reserva.setUsuario(usuario);
+        reserva.setOcupante(ocupante);
         reserva.setModulo(modulo);
         reserva.setDataInicio(requestDTO.dataInicio());
         reserva.setDataFim(requestDTO.dataFim());
@@ -64,8 +64,20 @@ public class ReservaService {
 
 
     @Transactional(readOnly = true)
-    public Page<ReservaResponseDTO> buscarReservaPorIdUsuario(Long idUsuario, Pageable pageable) {
-        return reservaRepository.findReservaByUsuarioId(idUsuario, pageable)
+    public Page<ReservaResponseDTO> buscarReservasPorOcupante(Long idOcupante, Pageable pageable) {
+        ocupanteRepository.findById(idOcupante)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + idOcupante));
+
+        return reservaRepository.findByOcupante_Id(idOcupante, pageable)
+                .map(ReservaResponseDTO::fromEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReservaResponseDTO> buscarReservasPorModulo(Long idModulo, Pageable pageable) {
+        moduloHabitacionalRepository.findById(idModulo)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Modulo não encontrado com ID: " + idModulo));
+
+        return reservaRepository.findByModulo_Id(idModulo, pageable)
                 .map(ReservaResponseDTO::fromEntity);
     }
 

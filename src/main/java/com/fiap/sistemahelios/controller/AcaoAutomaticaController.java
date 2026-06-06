@@ -1,11 +1,9 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.AcaoAutomaticaRequestDTO;
-import com.fiap.sistemahelios.dto.AcaoAutomaticaResponseDTO;
-import com.fiap.sistemahelios.dto.AlertaRequestDTO;
-import com.fiap.sistemahelios.dto.AlertaResponseDTO;
+import com.fiap.sistemahelios.dto.request.AcaoAutomaticaRequestDTO;
+import com.fiap.sistemahelios.dto.response.AcaoAutomaticaResponseDTO;
+import com.fiap.sistemahelios.dto.response.AlertaResponseDTO;
 import com.fiap.sistemahelios.service.AcaoAutomaticaService;
-import com.fiap.sistemahelios.service.AlertaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

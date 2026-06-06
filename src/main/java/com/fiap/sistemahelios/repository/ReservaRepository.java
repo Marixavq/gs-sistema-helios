@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
+    Page<Reserva> findByOcupante_Id(Long idOcupante, Pageable pageable);
 
-    Page<Reserva> findReservaByUsuarioId(Long idUsuario, Pageable pageable);
+    Page<Reserva> findByModulo_Id( Long idModulo, Pageable pageable);
 }

@@ -1,4 +1,4 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.response;
 
 import com.fiap.sistemahelios.model.Habitat;
 
@@ -12,7 +12,8 @@ public record HabitatResponseDTO(
         String tipoHabitat,
         Integer capacidadeTotal,
         String statusOperacional,
-        LocalDate datacCriacao
+        LocalDate datacCriacao,
+        String nivelRisco
 
 ) {
 
@@ -24,7 +25,8 @@ public record HabitatResponseDTO(
                 habitat.getTipoHabitat(),
                 habitat.getCapacidadeTotal(),
                 habitat.getStatusOperacional(),
-                habitat.getDataCriacao()
+                habitat.getDataCriacao(),
+                habitat.getModulo().getNivelRisco()
         );
     }
 }

@@ -1,4 +1,4 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.response;
 
 import com.fiap.sistemahelios.model.Usuario;
 

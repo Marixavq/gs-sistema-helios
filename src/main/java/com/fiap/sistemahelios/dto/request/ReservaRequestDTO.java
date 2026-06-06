@@ -1,4 +1,4 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ public record ReservaRequestDTO(
                 example = "1"
         )
         @NotNull(message = "ID do responsável pela reserva é obrigatório")
-        Long idUsuario,
+        Long idOcupante,
 
         @Schema(
                 description = "ID do Modulo Habitacional da reserva é obrigatório",

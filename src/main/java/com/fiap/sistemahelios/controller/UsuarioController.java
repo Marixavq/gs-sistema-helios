@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
-import com.fiap.sistemahelios.dto.UsuarioRequestDTO;
-import com.fiap.sistemahelios.dto.UsuarioResponseDTO;
+import com.fiap.sistemahelios.dto.request.UsuarioRequestDTO;
+import com.fiap.sistemahelios.dto.response.UsuarioResponseDTO;
 import com.fiap.sistemahelios.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

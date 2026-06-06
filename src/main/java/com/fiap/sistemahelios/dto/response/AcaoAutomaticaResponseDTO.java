@@ -1,7 +1,6 @@
-package com.fiap.sistemahelios.dto;
+package com.fiap.sistemahelios.dto.response;
 
 import com.fiap.sistemahelios.model.AcaoAutomatica;
-import com.fiap.sistemahelios.model.Alerta;
 
 import java.time.LocalDateTime;
 

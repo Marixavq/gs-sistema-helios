@@ -1,7 +1,7 @@
 package com.fiap.sistemahelios.service;
 
-import com.fiap.sistemahelios.dto.UsuarioRequestDTO;
-import com.fiap.sistemahelios.dto.UsuarioResponseDTO;
+import com.fiap.sistemahelios.dto.request.UsuarioRequestDTO;
+import com.fiap.sistemahelios.dto.response.UsuarioResponseDTO;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.exception.ValidacaoException;
 import com.fiap.sistemahelios.model.Usuario;
