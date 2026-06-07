@@ -2,69 +2,78 @@ package com.fiap.sistemahelios.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public record ModuloHabitacionalRequestDTO (
 
-    @NotNull(message = "Habitat é obrigatório")
-    @Schema(
-            description = "ID do habitat é obrigatório",
-            example = "1"
-    )
-    Long idHabitat,
+        @NotNull(message = "Habitat é obrigatório")
+        @Schema(
+                description = "Habitat associado a ModuloHabitacional",
+                example = "1"
+        )
+        Long idHabitat,
 
-    @NotBlank(message = "Nome do módulo é obrigatório")
-    @Size(min = 3, max = 100, message = "O nome do módulo deve ter entre 3 e 100 caracteres")
-    @Column(name = "nome_modulo", nullable = false, length = 100)
-    @Schema(
-            description = "Nome do módulo",
-            example = "Modulo Aurora"
-    )
-    String nomeModulo,
-
-    @NotBlank(message = "Tipo do módulo é obrigatório")
-    @Size(min = 3, max = 50, message = "O tipo do módulo deve ter entre 3 e 50 caracteres")
-    @Column(name = "tipo_modulo", nullable = false, length = 50)
-    @Schema(
-            description = "Tipo do módulo",
-            example = "Residencial"
-    )
-    String tipoModulo,
-
-    @NotNull(message = "Capacidade de ocupantes é obrigatória")
-    @Positive(message = "A capacidade deve ser maior que zero")
-    @Column(name = "capacidade_ocupantes", nullable = false)
-    @Schema(
-            description = "Capacidade de ocupantes",
-            example = "8"
-    )
-    Integer capacidadeOcupantes,
+        @NotBlank(message = "Nome do módulo é obrigatório")
+        @Size(max = 100, message = "O nome do módulo deve ter no máximo 100 caracteres")
+        @Column(name = "nome_modulo", nullable = false, length = 100)
+        @Schema(
+                description = "Nome do módulo habitacional",
+                example = "Módulo Aurora",
+                maxLength = 100
+        )
+        String nomeModulo,
 
 
-    Integer capacidadeAtual,
+        @NotBlank(message = "Tipo do módulo é obrigatório")
+        @Size(max = 50, message = "O tipo do módulo deve ter no máximo 50 caracteres")
+        @Schema(
+                description = "Tipo do módulo habitacional",
+                example = "Residencial",
+                maxLength = 50
+        )
+        String tipoModulo,
 
-    @NotBlank(message = "Status do módulo é obrigatório")
-    @Size(max = 20, message = "O status do módulo deve ter no máximo 20 caracteres")
-    @Column(name = "status_modulo", nullable = false, length = 20)
-    @Schema(
-            description = "Status do módulo",
-            example = "Ativo"
-    )
-    String statusModulo,
+        @NotNull(message = "Capacidade de ocupantes é obrigatória")
+        @Positive(message = "A capacidade deve ser maior que zero")
+        @Schema(
+                description = "Capacidade máxima de ocupantes do módulo",
+                example = "8"
+        )
+        Integer capacidadeOcupantes,
 
-    @NotBlank(message = "Nível de risco é obrigatório")
-    @Size(max = 20, message = "O nível de risco deve ter no máximo 20 caracteres")
-    @Column(name = "nivel_risco", nullable = false, length = 20)
-    @Schema(
-            description = "Nível de risco",
-            example = "Baixo"
-    )
-    String nivelRisco,
+        @NotNull(message = "Capacidade de ocupantes é obrigatória")
+        @PositiveOrZero(message = "A capacidade deve ser maior ou igual a zero")
+        @Schema(
+                description = "Quantidade atual de ocupantes no módulo",
+                example = "5"
+        )
+        Integer ocupacaoAtual,
 
-    String indiceRisco
+        @NotBlank(message = "Status do módulo é obrigatório")
+        @Size(max = 30, message = "O status do módulo deve ter no máximo 30 caracteres")
+        @Schema(
+                description = "Status operacional do módulo",
+                example = "ATIVO",
+                maxLength = 30
+        )
+        String statusModulo,
+
+        @NotBlank(message = "Nível de risco é obrigatório")
+        @Size(max = 20, message = "O nível de risco deve ter no máximo 20 caracteres")
+        @Schema(
+                description = "Classificação do nível de risco do módulo",
+                example = "BAIXO",
+                maxLength = 20
+        )
+        String nivelRisco,
+
+        @NotNull(message = "Indice de risco é obrigatório")
+        @PositiveOrZero(message = "O indice de risco  deve ser maior ou igual a zero")
+        @Schema(
+                description = "Índice numérico de risco do módulo",
+                example = "12.75"
+        )
+        String indiceRisco
 
 ) {
 }

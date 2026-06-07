@@ -4,11 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "reservas")
+@Table(name = "reserva")
 @Schema(
         name = "Reserva",
         description = "Representa uma reserva no sistema Helios"
@@ -25,22 +26,25 @@ public class Reserva {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", nullable = false)
-    @NotNull(message = "O ID do usuário é obrigatório")
-    private Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ocupante", nullable = false)
-    @NotNull(message = "O ID do ocupante é obrigatório")
+    @NotNull(message = "O ocupante é obrigatório")
+    @Schema(
+            description = "Ocupante da reserva",
+            example = "1"
+    )
     private Ocupante ocupante;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_modulo", nullable = false)
-    @NotNull(message = "O ID do modulo é obrigatório")
+    @NotNull(message = "O módulo é obrigatório")
+    @Schema(
+            description = "ModuloHabitacional da reserva",
+            example = "1"
+    )
     private ModuloHabitacional modulo;
 
     @NotNull(message = "Data de início da reserva é obrigatória")
-    @Column(name = "data_inicio")
+    @Column(name = "data_inicio", nullable = false)
     @Schema(
             description = "Data de início da reserva do usuário",
             example = "2026-05-04"
@@ -48,27 +52,27 @@ public class Reserva {
     private LocalDate dataInicio;
 
     @NotNull(message = "Data de fim da reserva é obrigatória")
-    @Column(name = "data_cadastro")
+    @Column(name = "data_fim", nullable = false)
     @Schema(
             description = "Data de fim da reserva do usuário",
             example = "2026-05-14"
     )
     private LocalDate dataFim;
 
-
     @NotBlank(message = "Status da reserva é obrigatório")
-    @Column(name = "status_reserva", nullable = false)
+    @Size(max = 30, message = "O status deve ter no máximo 30 caracteres")
+    @Column(name = "status_reserva", nullable = false, length = 30)
     @Schema(
             description = "Indica se a reserva ainda está ativa sistema",
-            example = "Cancelada"
+            example = "Cancelada",
+            maxLength = 30
     )
     private String statusReserva;
 
     public Reserva() {
     }
 
-    public Reserva(Usuario usuario, Ocupante ocupante, ModuloHabitacional modulo, LocalDate dataInicio, LocalDate dataFim, String statusReserva) {
-        this.usuario = usuario;
+    public Reserva(Ocupante ocupante, ModuloHabitacional modulo, LocalDate dataInicio, LocalDate dataFim, String statusReserva) {
         this.ocupante = ocupante;
         this.modulo = modulo;
         this.dataInicio = dataInicio;
@@ -82,14 +86,6 @@ public class Reserva {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Ocupante getOcupante() {

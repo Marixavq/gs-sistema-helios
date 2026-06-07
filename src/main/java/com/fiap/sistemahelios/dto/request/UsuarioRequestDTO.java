@@ -6,37 +6,43 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record UsuarioRequestDTO(
-        
+
+        @NotBlank(message = "Nome é obrigatório")
+        @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
         @Schema(
                 description = "Nome do usuário",
-                example = "Ana Silva"
+                example = "Ana Silva",
+                maxLength = 100
         )
-        @NotBlank(message = "Nome é obrigatório")
-        @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
         String nome,
 
-        @Schema(
-                description = "Email do usuário",
-                example = "anasilva@gmail.com"
-        )
         @NotBlank(message = "Email é obrigatório")
         @Email(message = "Email inválido")
-        @Size(max = 120, message = "O email deve ter no máximo 120 caracteres")
+        @Size(max = 150, message = "O email deve ter no máximo 150 caracteres")
+        @Schema(
+                description = "Email único do usuário",
+                example = "anasilva@gmail.com",
+                maxLength = 150
+        )
         String email,
 
+        @NotBlank(message = "Senha é obrigatória")
+        @Size(min = 8, max = 100, message = "Senha deve ter entre 8 e 100 caracteres")
         @Schema(
                 description = "Senha do usuário",
-                example = "123456"
+                example = "123642",
+                minLength = 8,
+                maxLength = 100
         )
-        @NotBlank(message = "Senha obrigatória")
-        @Size(min = 6, max = 8, message = "Senha deve ter entre 6 e 8 caracteres")
         String senha,
 
+        @NotBlank(message = "Tipo de usuário é obrigatório")
+        @Size(max = 50, message = "O tipo de usuário deve ter no máximo 50 caracteres")
         @Schema(
                 description = "Tipo do usuário",
-                example = "Turista"
+                example = "Turista",
+                maxLength = 50
         )
-        @NotBlank(message = "Tipo de usuário é obrigatório")
         String tipoUsuario
 
 ) {

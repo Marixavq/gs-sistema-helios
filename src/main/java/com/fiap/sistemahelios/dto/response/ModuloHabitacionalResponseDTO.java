@@ -23,7 +23,7 @@ public record ModuloHabitacionalResponseDTO(
                 moduloHabitacional.getNomeModulo(),
                 moduloHabitacional.getTipoModulo(),
                 moduloHabitacional.getCapacidadeOcupantes(),
-                moduloHabitacional.getCapacidadeAtual(),
+                moduloHabitacional.getOcupacaoAtual(),
                 moduloHabitacional.getStatusModulo(),
                 moduloHabitacional.getNivelRisco(),
                 moduloHabitacional.getIndiceRisco()

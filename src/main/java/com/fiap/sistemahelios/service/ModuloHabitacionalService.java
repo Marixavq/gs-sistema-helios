@@ -37,7 +37,7 @@ public class ModuloHabitacionalService {
         moduloHabitacional.setNomeModulo(requestDTO.nomeModulo());
         moduloHabitacional.setTipoModulo(requestDTO.tipoModulo());
         moduloHabitacional.setCapacidadeOcupantes(requestDTO.capacidadeOcupantes());
-        moduloHabitacional.setCapacidadeAtual(requestDTO.capacidadeAtual());
+        moduloHabitacional.setOcupacaoAtual(requestDTO.capacidadeAtual());
         moduloHabitacional.setStatusModulo(requestDTO.statusModulo());
         moduloHabitacional.setNivelRisco(requestDTO.nivelRisco());
         moduloHabitacional.setIndiceRisco(requestDTO.indiceRisco());
