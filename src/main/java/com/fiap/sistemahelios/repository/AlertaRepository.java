@@ -10,4 +10,9 @@ public interface AlertaRepository extends JpaRepository<Alerta, Long> {
     Page<Alerta> findByModulo_Id(Long idModulo, Pageable pageable);
 
     Page<Alerta> findBySensor_Id(Long idSensor, Pageable pageable);
+
+    boolean existsBySensorId(Long id);
+
+    boolean existsByModuloId(Long id);
+
 }

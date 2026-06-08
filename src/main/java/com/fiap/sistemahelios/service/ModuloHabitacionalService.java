@@ -2,11 +2,11 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.request.ModuloHabitacionalRequestDTO;
 import com.fiap.sistemahelios.dto.response.ModuloHabitacionalResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Habitat;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
-import com.fiap.sistemahelios.repository.HabitatRepository;
-import com.fiap.sistemahelios.repository.ModuloHabitacionalRepository;
+import com.fiap.sistemahelios.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +18,17 @@ public class ModuloHabitacionalService {
 
     private final ModuloHabitacionalRepository moduloHabitacionalRepository;
     private final HabitatRepository habitatRepository;
+    private final SensorRepository sensorRepository;
+    private final ReservaRepository reservaRepository;
+    private final AlertaRepository alertaRepository;
 
     @Autowired
-    public ModuloHabitacionalService(ModuloHabitacionalRepository moduloHabitacionalRepository, HabitatRepository habitatRepository) {
+    public ModuloHabitacionalService(ModuloHabitacionalRepository moduloHabitacionalRepository, HabitatRepository habitatRepository, SensorRepository sensorRepository, ReservaRepository reservaRepository, AlertaRepository alertaRepository) {
         this.moduloHabitacionalRepository = moduloHabitacionalRepository;
         this.habitatRepository = habitatRepository;
+        this.sensorRepository = sensorRepository;
+        this.reservaRepository = reservaRepository;
+        this.alertaRepository = alertaRepository;
     }
 
     @Transactional
@@ -37,7 +43,7 @@ public class ModuloHabitacionalService {
         moduloHabitacional.setNomeModulo(requestDTO.nomeModulo());
         moduloHabitacional.setTipoModulo(requestDTO.tipoModulo());
         moduloHabitacional.setCapacidadeOcupantes(requestDTO.capacidadeOcupantes());
-        moduloHabitacional.setOcupacaoAtual(requestDTO.capacidadeAtual());
+        moduloHabitacional.setOcupacaoAtual(requestDTO.ocupacaoAtual());
         moduloHabitacional.setStatusModulo(requestDTO.statusModulo());
         moduloHabitacional.setNivelRisco(requestDTO.nivelRisco());
         moduloHabitacional.setIndiceRisco(requestDTO.indiceRisco());
@@ -87,6 +93,19 @@ public class ModuloHabitacionalService {
         if (!moduloHabitacionalRepository.existsById(id)) {
             throw new RecursoNaoEncontradoException("ModuloHabitacional não encontrado com ID: " + id);
         }
+
+        if (sensorRepository.existsByModuloId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o módulo pois existem sensores vinculados.");
+        }
+
+        if (reservaRepository.existsByModuloId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o módulo pois existem reservas vinculadas.");
+        }
+
+        if (alertaRepository.existsByModuloId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o módulo pois existem alertas vinculados.");
+        }
+
         moduloHabitacionalRepository.deleteById(id);
     }
 

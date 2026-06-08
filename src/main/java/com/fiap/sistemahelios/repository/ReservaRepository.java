@@ -9,4 +9,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     Page<Reserva> findByOcupante_Id(Long idOcupante, Pageable pageable);
 
     Page<Reserva> findByModulo_Id( Long idModulo, Pageable pageable);
+
+    boolean existsByModuloId(Long id);
+
+    boolean existsByOcupanteId(Long id);
 }

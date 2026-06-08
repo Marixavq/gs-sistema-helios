@@ -2,6 +2,7 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.request.AcaoAutomaticaRequestDTO;
 import com.fiap.sistemahelios.dto.response.AcaoAutomaticaResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.AcaoAutomatica;
 import com.fiap.sistemahelios.model.Alerta;
@@ -79,6 +80,7 @@ public class AcaoAutomaticaService {
         if (!acaoAutomaticaRepository.existsById(id)) {
             throw new RecursoNaoEncontradoException("acaoAutomatica não encontrado com ID: " + id);
         }
+
         acaoAutomaticaRepository.deleteById(id);
     }
 

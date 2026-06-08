@@ -8,10 +8,10 @@ public record ModuloHabitacionalResponseDTO(
         String nomeModulo,
         String tipoModulo,
         Integer capacidadeOcupantes,
-        Integer capacidadeAtual,
+        Integer ocupacaoAtual,
         String statusModulo,
         String nivelRisco,
-        String indiceRisco
+        Double indiceRisco
 
 
 ) {

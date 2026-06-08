@@ -2,9 +2,11 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.request.HabitatRequestDTO;
 import com.fiap.sistemahelios.dto.response.HabitatResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Habitat;
 import com.fiap.sistemahelios.repository.HabitatRepository;
+import com.fiap.sistemahelios.repository.ModuloHabitacionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class HabitatService {
 
     private final HabitatRepository habitatRepository;
+    private final ModuloHabitacionalRepository moduloHabitacionalRepository;
 
     @Autowired
-    public HabitatService(HabitatRepository habitatRepository) {
+    public HabitatService(HabitatRepository habitatRepository, ModuloHabitacionalRepository moduloHabitacionalRepository) {
         this.habitatRepository = habitatRepository;
+        this.moduloHabitacionalRepository = moduloHabitacionalRepository;
     }
 
     @Transactional
@@ -71,6 +75,10 @@ public class HabitatService {
         if (!habitatRepository.existsById(id)) {
             throw new RecursoNaoEncontradoException("Habitat não encontrado com ID: " + id);
         }
+        if (moduloHabitacionalRepository.existsByHabitatId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o habitat pois existem módulos vinculados.");
+        }
+
         habitatRepository.deleteById(id);
     }
 

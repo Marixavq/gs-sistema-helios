@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SensorRepository extends JpaRepository<Sensor, Long> {
 
     Page<Sensor> findByModulo_Id(Long idModulo, Pageable pageable);
+
+    boolean existsByModuloId(Long id);
 }

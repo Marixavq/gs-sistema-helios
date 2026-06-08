@@ -2,9 +2,12 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.request.OcupanteRequestDTO;
 import com.fiap.sistemahelios.dto.response.OcupanteResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.Ocupante;
+import com.fiap.sistemahelios.repository.ModuloHabitacionalRepository;
 import com.fiap.sistemahelios.repository.OcupanteRepository;
+import com.fiap.sistemahelios.repository.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class OcupanteService {
 
     private final OcupanteRepository ocupanteRepository;
+    private final ReservaRepository reservaRepository;
 
     @Autowired
-    public OcupanteService(OcupanteRepository ocupanteRepository) {
+    public OcupanteService(OcupanteRepository ocupanteRepository, ReservaRepository reservaRepository) {
         this.ocupanteRepository = ocupanteRepository;
+        this.reservaRepository = reservaRepository;
     }
 
     @Transactional
@@ -67,6 +72,11 @@ public class OcupanteService {
         if (!ocupanteRepository.existsById(id)) {
             throw new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + id);
         }
+
+        if (reservaRepository.existsByOcupanteId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o ocupante pois existem reservas vinculadas.");
+        }
+
         ocupanteRepository.deleteById(id);
     }
 

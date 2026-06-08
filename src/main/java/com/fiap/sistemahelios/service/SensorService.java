@@ -2,9 +2,12 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.request.SensorRequestDTO;
 import com.fiap.sistemahelios.dto.response.SensorResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
 import com.fiap.sistemahelios.model.Sensor;
+import com.fiap.sistemahelios.repository.AlertaRepository;
+import com.fiap.sistemahelios.repository.LeituraSensorRepository;
 import com.fiap.sistemahelios.repository.ModuloHabitacionalRepository;
 import com.fiap.sistemahelios.repository.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +22,15 @@ public class SensorService {
 
     private final SensorRepository sensorRepository;
     private final ModuloHabitacionalRepository moduloHabitacionalRepository;
+    private final LeituraSensorRepository leituraSensorRepository;
+    private final AlertaRepository alertaRepository;
 
     @Autowired
-    public SensorService(SensorRepository sensorRepository,ModuloHabitacionalRepository moduloHabitacionalRepository) {
+    public SensorService(SensorRepository sensorRepository,ModuloHabitacionalRepository moduloHabitacionalRepository,LeituraSensorRepository leituraSensorRepository, AlertaRepository alertaRepository) {
         this.sensorRepository = sensorRepository;
         this.moduloHabitacionalRepository = moduloHabitacionalRepository;
+        this.leituraSensorRepository = leituraSensorRepository;
+        this.alertaRepository = alertaRepository;
     }
 
     @Transactional
@@ -94,6 +101,15 @@ public class SensorService {
         if (!sensorRepository.existsById(id)) {
             throw new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + id);
         }
+
+        if (leituraSensorRepository.existsBySensorId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o sensor pois existem leituras vinculadas.");
+        }
+
+        if (alertaRepository.existsBySensorId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o sensor pois existem alertas vinculados.");
+        }
+
         sensorRepository.deleteById(id);
     }
 

@@ -73,7 +73,7 @@ public record ModuloHabitacionalRequestDTO (
                 description = "Índice numérico de risco do módulo",
                 example = "12.75"
         )
-        String indiceRisco
+        Double indiceRisco
 
 ) {
 }

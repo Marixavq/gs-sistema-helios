@@ -2,6 +2,7 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.request.AlertaRequestDTO;
 import com.fiap.sistemahelios.dto.response.AlertaResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.*;
 import com.fiap.sistemahelios.repository.*;
@@ -17,15 +18,15 @@ public class AlertaService {
     private final AlertaRepository alertaRepository;
     private final ModuloHabitacionalRepository moduloHabitacionalRepository;
     private final SensorRepository sensorRepository;
-
+    private final AcaoAutomaticaRepository acaoAutomaticaRepository;
 
     @Autowired
-    public AlertaService(AlertaRepository alertaRepository,ModuloHabitacionalRepository moduloHabitacionalRepository, SensorRepository sensorRepository) {
+    public AlertaService(AlertaRepository alertaRepository,ModuloHabitacionalRepository moduloHabitacionalRepository, SensorRepository sensorRepository, AcaoAutomaticaRepository acaoAutomaticaRepository) {
         this.alertaRepository = alertaRepository;
         this.moduloHabitacionalRepository = moduloHabitacionalRepository;
         this.sensorRepository = sensorRepository;
+        this.acaoAutomaticaRepository = acaoAutomaticaRepository;
     }
-
 
     @Transactional
     public AlertaResponseDTO salvar (AlertaRequestDTO requestDTO) {
@@ -114,6 +115,11 @@ public class AlertaService {
         if (!alertaRepository.existsById(id)) {
             throw new RecursoNaoEncontradoException("Alerta não encontrado com ID: " + id);
         }
+
+        if (acaoAutomaticaRepository.existsByAlertaId(id)) {
+            throw new OperacaoNaoPermitidaException("Não é possível excluir o alerta pois existem ações automáticas vinculadas.");
+        }
+
         alertaRepository.deleteById(id);
     }
 
