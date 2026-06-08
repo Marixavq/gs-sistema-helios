@@ -39,6 +39,8 @@ public class SensorService {
         ModuloHabitacional moduloHabitacional = moduloHabitacionalRepository.findById(requestDTO.idModulo())
                 .orElseThrow(() -> new RecursoNaoEncontradoException("ModuloHabitacional não encontrado com ID: " + requestDTO.idModulo()));
 
+        validarLimites(requestDTO);
+
         Sensor sensor = new Sensor();
         sensor.setModulo(moduloHabitacional);
         sensor.setNomeSensor(requestDTO.nomeSensor());
@@ -83,6 +85,8 @@ public class SensorService {
         Sensor sensorExistente = sensorRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + id));
 
+        validarLimites(requestDTO);
+
         sensorExistente.setNomeSensor(requestDTO.nomeSensor());
         sensorExistente.setTipoSensor(requestDTO.tipoSensor());
         sensorExistente.setStatusSensor(requestDTO.statusSensor());
@@ -111,6 +115,17 @@ public class SensorService {
         }
 
         sensorRepository.deleteById(id);
+    }
+
+
+    // regras de neǵocio
+
+    private void validarLimites(SensorRequestDTO requestDTO) {
+        if (requestDTO.limiteMinimo() != null &&
+                requestDTO.limiteMaximo() != null &&
+                requestDTO.limiteMinimo() >= requestDTO.limiteMaximo()) {
+            throw new OperacaoNaoPermitidaException("Não é possível cadastrar esses limites. O limite mínimo precisa ser inferior ao limite máximo.");
+        }
     }
 
 }

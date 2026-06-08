@@ -31,7 +31,10 @@ Estrutura em pastas:
     src/main/java
         com.fiap.sistemahelios
             controller
-            DTO
+            dto
+                dashboard
+                request
+                response
             exception
             model
             repository
@@ -57,3 +60,5 @@ Challenge interdisciplinar da FIAP.
 ## 📄 Endereço do projeto
 
 Link do projeto no GitHub: https://github.com/Marixavq/gs-sistema-helios
+
+Link do Swagger: http://localhost:8080/swagger-ui/index.html

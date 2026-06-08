@@ -2,6 +2,7 @@ package com.fiap.sistemahelios.service;
 
 import com.fiap.sistemahelios.dto.request.ReservaRequestDTO;
 import com.fiap.sistemahelios.dto.response.ReservaResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.ModuloHabitacional;
 import com.fiap.sistemahelios.model.Ocupante;
@@ -36,6 +37,9 @@ public class ReservaService {
 
         ModuloHabitacional modulo = moduloHabitacionalRepository.findById(requestDTO.idModulo())
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Módulo não encontrado com ID: " + requestDTO.idModulo()));
+
+        validarCapacidadeModulo(modulo);
+        validarDataReserva(requestDTO);
 
         Reserva reserva = new Reserva();
         reserva.setOcupante(ocupante);
@@ -87,6 +91,8 @@ public class ReservaService {
         Reserva reservaExistente = reservaRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Reserva não encontrada com ID: " + id));
 
+        validarDataReserva(requestDTO);
+
         reservaExistente.setDataInicio(requestDTO.dataInicio());
         reservaExistente.setDataFim(requestDTO.dataFim());
         reservaExistente.setStatusReserva(requestDTO.statusReserva());
@@ -103,4 +109,21 @@ public class ReservaService {
         }
         reservaRepository.deleteById(id);
     }
+
+
+    // regras de neǵocio
+
+    private void validarCapacidadeModulo(ModuloHabitacional modulo) {
+        if (modulo.getOcupacaoAtual() >= modulo.getCapacidadeOcupantes()) {
+            throw new OperacaoNaoPermitidaException("Não é possível realizar a reserva. O módulo já atingiu sua capacidade máxima.");
+        }
+    }
+
+    private void validarDataReserva(ReservaRequestDTO requestDTO) {
+        if (!requestDTO.dataFim().isAfter(requestDTO.dataInicio())) {
+            throw new OperacaoNaoPermitidaException("A data do fim da reserva precisa ocorrer depois da data de início.");
+        }
+    }
+
+
 }

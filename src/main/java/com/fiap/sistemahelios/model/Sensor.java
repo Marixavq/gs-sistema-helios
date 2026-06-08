@@ -75,16 +75,14 @@ public class Sensor {
     )
     private String unidadeMedida;
 
-    @NotNull(message = "Limite mínimo é obrigatório")
-    @Column(name = "limite_minimo", nullable = false)
+    @Column(name = "limite_minimo")
     @Schema(
             description = "Valor mínimo aceitável do sensor",
             example = "10.5"
     )
     private Double limiteMinimo;
 
-    @NotNull(message = "Limite máximo é obrigatório")
-    @Column(name = "limite_maximo", nullable = false)
+    @Column(name = "limite_maximo")
     @Schema(
             description = "Valor máximo aceitável do sensor",
             example = "35.0"

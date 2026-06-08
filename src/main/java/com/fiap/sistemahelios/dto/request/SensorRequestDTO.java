@@ -51,14 +51,12 @@ public record SensorRequestDTO (
         )
         String unidadeMedida,
 
-        @NotNull(message = "Limite mínimo é obrigatório")
         @Schema(
                 description = "Valor mínimo aceitável do sensor",
                 example = "10.5"
         )
         Double limiteMinimo,
 
-        @NotNull(message = "Limite máximo é obrigatório")
         @Schema(
                 description = "Valor máximo aceitável do sensor",
                 example = "35.0"
