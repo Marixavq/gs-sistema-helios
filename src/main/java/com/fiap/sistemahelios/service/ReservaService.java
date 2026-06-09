@@ -49,6 +49,8 @@ public class ReservaService {
         reserva.setDataFim(requestDTO.dataFim());
         reserva.setStatusReserva("ATIVO");
 
+        moduloHabitacional.setOcupacaoAtual(moduloHabitacional.getOcupacaoAtual() + 1);
+
         Reserva reservaSalva = reservaRepository.save(reserva);
 
         return ReservaResponseDTO.fromEntity(reservaSalva);

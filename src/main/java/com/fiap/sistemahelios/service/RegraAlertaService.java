@@ -1,6 +1,8 @@
 package com.fiap.sistemahelios.service;
 import com.fiap.sistemahelios.dto.request.RegraAlertaRequestDTO;
+import com.fiap.sistemahelios.dto.request.SensorRequestDTO;
 import com.fiap.sistemahelios.dto.response.RegraAlertaResponseDTO;
+import com.fiap.sistemahelios.exception.OperacaoNaoPermitidaException;
 import com.fiap.sistemahelios.exception.RecursoNaoEncontradoException;
 import com.fiap.sistemahelios.model.RegraAlerta;
 import com.fiap.sistemahelios.repository.RegraAlertaRepository;
@@ -23,6 +25,8 @@ public class RegraAlertaService {
 
     @Transactional
     public RegraAlertaResponseDTO salvar (RegraAlertaRequestDTO requestDTO) {
+
+        validarValores(requestDTO);
 
         RegraAlerta regraAlerta = new RegraAlerta();
 
@@ -80,5 +84,10 @@ public class RegraAlertaService {
         regraAlertaRepository.deleteById(id);
     }
 
+    private void validarValores(RegraAlertaRequestDTO requestDTO) {
+        if (requestDTO.valorMinimo() >= requestDTO.valorMaximo()) {
+            throw new OperacaoNaoPermitidaException("Não é possível cadastrar esses valores. O valor mínimo precisa ser inferior ao valor máximo.");
+        }
+    }
 
 }
