@@ -116,7 +116,7 @@ http://localhost:8080
 
 ---
 
-## 👨‍💻 Equipe
+## ⭐ Equipe - Code in Stars 
 
 | Integrante                | RM | Perfil GitHub                                     |
 |---------------------------| --- |---------------------------------------------------|
