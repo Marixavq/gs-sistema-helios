@@ -84,6 +84,7 @@ Habitat
 
 RegraAlerta  → valida LeituraSensor / gera Alerta
 LogEvento    ← recebe eventos de todo o sistema
+Usuario
 ```
 
 ---
