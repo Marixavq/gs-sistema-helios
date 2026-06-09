@@ -59,6 +59,7 @@ public class HabitatService {
     public HabitatResponseDTO atualizar(Long id, HabitatRequestDTO requestDTO) {
         Habitat habitatExistente = habitatRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Habitat não encontrado com ID: " + id));
+
         habitatExistente.setNome(requestDTO.nome());
         habitatExistente.setLocalizacao(requestDTO.localizacao());
         habitatExistente.setTipoHabitat(requestDTO.tipoHabitat());

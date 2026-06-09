@@ -1,6 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
 import com.fiap.sistemahelios.dto.request.ReservaRequestDTO;
+import com.fiap.sistemahelios.dto.response.ModuloHabitacionalResponseDTO;
 import com.fiap.sistemahelios.dto.response.ReservaResponseDTO;
 import com.fiap.sistemahelios.service.ReservaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,9 +16,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/reservas")
@@ -86,10 +91,28 @@ public class ReservaController {
                     description = "Reserva não encontrado"
             )
     })
-    public ResponseEntity<ReservaResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(reservaService.buscarPorId(id));
-    }
+    //com HATEOAS
+    public ResponseEntity<EntityModel<ReservaResponseDTO>> buscarPorId(@PathVariable Long id) {
 
+        ReservaResponseDTO responseDTO = reservaService.buscarPorId(id);
+
+            EntityModel<ReservaResponseDTO> responseComLinks =
+                    EntityModel.of(responseDTO);
+
+            responseComLinks.add(
+                    linkTo(methodOn(ReservaController.class)
+                            .buscarPorId(id))
+                            .withSelfRel()
+            );
+
+            responseComLinks.add(
+                    linkTo(methodOn(ReservaController.class)
+                            .listarTodos(Pageable.unpaged()))
+                            .withRel("todos")
+            );
+
+            return ResponseEntity.ok(responseComLinks);
+        }
 
     //buscarReservasPorOcupante
     @GetMapping("/ocupante/{idOcupante}")
@@ -120,7 +143,6 @@ public class ReservaController {
         return ResponseEntity.ok(reservasOcupante);
     }
 
-
     //buscarReservasPorModulo
     @GetMapping("/modulo/{idModulo}")
     @Operation(
@@ -148,7 +170,6 @@ public class ReservaController {
         Page<ReservaResponseDTO> reservasModulo = reservaService.buscarReservasPorModulo(idModulo, pageable);
         return ResponseEntity.ok(reservasModulo);
     }
-
 
 
     @PutMapping("/{id}")

@@ -25,10 +25,12 @@ public class RegraAlertaService {
     public RegraAlertaResponseDTO salvar (RegraAlertaRequestDTO requestDTO) {
 
         RegraAlerta regraAlerta = new RegraAlerta();
+
         regraAlerta.setTipoSensor(requestDTO.tipoSensor());
         regraAlerta.setValorMinimo(requestDTO.valorMinimo());
         regraAlerta.setValorMaximo(requestDTO.valorMaximo());
         regraAlerta.setNivelCriticidade(requestDTO.nivelCriticidade());
+        regraAlerta.setPesoRisco(requestDTO.pesoRisco());
         regraAlerta.setMensagemPadrao(requestDTO.mensagemPadrao());
         regraAlerta.setAtivo(requestDTO.ativo());
 
@@ -61,7 +63,8 @@ public class RegraAlertaService {
         regraAlertaExistente.setValorMinimo(requestDTO.valorMinimo());
         regraAlertaExistente.setValorMaximo(requestDTO.valorMaximo());
         regraAlertaExistente.setNivelCriticidade(requestDTO.nivelCriticidade());
-        regraAlertaExistente.setMensagemPadrao(requestDTO.mensagemPadrao());
+        regraAlertaExistente.setNivelCriticidade(requestDTO.nivelCriticidade());
+        regraAlertaExistente.setPesoRisco(requestDTO.pesoRisco());
         regraAlertaExistente.setAtivo(requestDTO.ativo());
 
         RegraAlerta regraAlertaAtualizado = regraAlertaRepository.save(regraAlertaExistente);

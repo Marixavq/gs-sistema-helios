@@ -15,9 +15,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/modulos")
@@ -90,10 +94,40 @@ public class ModuloHabitacionalController {
                     description = "ModuloHabitacional não encontrado"
             )
     })
-    public ResponseEntity<ModuloHabitacionalResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(moduloHabitacionalService.buscarPorId(id));
-    }
+    //com HATEOAS
+    public ResponseEntity<EntityModel<ModuloHabitacionalResponseDTO>>  buscarPorId(@PathVariable Long id) {
 
+        ModuloHabitacionalResponseDTO responseDTO = moduloHabitacionalService.buscarPorId(id);
+
+        EntityModel<ModuloHabitacionalResponseDTO> responseComLinks =
+                EntityModel.of(responseDTO);
+
+        responseComLinks.add(
+                linkTo(methodOn(ModuloHabitacionalController.class)
+                        .buscarPorId(id))
+                        .withSelfRel()
+        );
+
+        responseComLinks.add(
+                linkTo(methodOn(ModuloHabitacionalController.class)
+                        .listarTodos(Pageable.unpaged()))
+                        .withRel("todos")
+        );
+
+        responseComLinks.add(
+                linkTo(methodOn(SensorController.class)
+                        .buscarSensoresPorModulo(id, Pageable.unpaged()))
+                        .withRel("sensores")
+        );
+
+        responseComLinks.add(
+                linkTo(methodOn(ReservaController.class)
+                        .buscarReservasPorModulo(id, Pageable.unpaged()))
+                        .withRel("reservas")
+        );
+
+        return ResponseEntity.ok(responseComLinks);
+    }
 
 
     @PutMapping("/{id}")

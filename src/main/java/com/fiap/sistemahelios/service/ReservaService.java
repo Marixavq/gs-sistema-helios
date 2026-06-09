@@ -35,15 +35,16 @@ public class ReservaService {
         Ocupante ocupante = ocupanteRepository.findById(requestDTO.idOcupante())
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + requestDTO.idOcupante()));
 
-        ModuloHabitacional modulo = moduloHabitacionalRepository.findById(requestDTO.idModulo())
+        ModuloHabitacional moduloHabitacional = moduloHabitacionalRepository.findById(requestDTO.idModulo())
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Módulo não encontrado com ID: " + requestDTO.idModulo()));
 
-        validarCapacidadeModulo(modulo);
+        validarCapacidadeModulo(moduloHabitacional);
         validarDataReserva(requestDTO);
 
         Reserva reserva = new Reserva();
+
         reserva.setOcupante(ocupante);
-        reserva.setModulo(modulo);
+        reserva.setModulo(moduloHabitacional);
         reserva.setDataInicio(requestDTO.dataInicio());
         reserva.setDataFim(requestDTO.dataFim());
         reserva.setStatusReserva("ATIVO");

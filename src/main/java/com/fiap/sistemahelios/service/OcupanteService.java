@@ -58,6 +58,7 @@ public class OcupanteService {
     public OcupanteResponseDTO atualizar(Long id, OcupanteRequestDTO requestDTO) {
         Ocupante ocupanteExistente = ocupanteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Ocupante não encontrado com ID: " + id));
+
         ocupanteExistente.setNome(requestDTO.nome());
         ocupanteExistente.setFuncao(requestDTO.funcao());
         ocupanteExistente.setStatusOcupante(requestDTO.statusOcupante());

@@ -2,6 +2,7 @@ package com.fiap.sistemahelios.controller;
 
 import com.fiap.sistemahelios.dto.request.OcupanteRequestDTO;
 import com.fiap.sistemahelios.dto.response.OcupanteResponseDTO;
+import com.fiap.sistemahelios.dto.response.ReservaResponseDTO;
 import com.fiap.sistemahelios.service.OcupanteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,13 +16,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/api/ocupantes")
-@Tag(name = "Ocuapntes", description = "Endpoints para gerenciamento de ocupantes")
+@Tag(name = "Ocupantes", description = "Endpoints para gerenciamento de ocupantes")
 public class OcupanteController {
 
 
@@ -86,10 +91,33 @@ public class OcupanteController {
                     description = "Ocupante não encontrado"
             )
     })
-    public ResponseEntity<OcupanteResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(ocupanteService.buscarPorId(id));
-    }
+    //com HATEOAS
+    public ResponseEntity<EntityModel<OcupanteResponseDTO>> buscarPorId(@PathVariable Long id) {
+        OcupanteResponseDTO responseDTO = ocupanteService.buscarPorId(id);
 
+            EntityModel<OcupanteResponseDTO> responseComLinks =
+                    EntityModel.of(responseDTO);
+
+            responseComLinks.add(
+                    linkTo(methodOn(OcupanteController.class)
+                            .buscarPorId(id))
+                            .withSelfRel()
+            );
+
+            responseComLinks.add(
+                    linkTo(methodOn(OcupanteController.class)
+                            .listarTodos(Pageable.unpaged()))
+                            .withRel("todos")
+            );
+
+            responseComLinks.add(
+                    linkTo(methodOn(ReservaController.class)
+                            .buscarReservasPorOcupante(id, Pageable.unpaged()))
+                            .withRel("reservas")
+            );
+
+            return ResponseEntity.ok(responseComLinks);
+        }
 
     @PutMapping("/{id}")
     @Operation(

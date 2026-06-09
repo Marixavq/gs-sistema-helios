@@ -1,6 +1,7 @@
 package com.fiap.sistemahelios.controller;
 
 import com.fiap.sistemahelios.dto.request.SensorRequestDTO;
+import com.fiap.sistemahelios.dto.response.ModuloHabitacionalResponseDTO;
 import com.fiap.sistemahelios.dto.response.SensorResponseDTO;
 import com.fiap.sistemahelios.service.SensorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,9 +16,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController
@@ -88,8 +93,27 @@ public class SensorController {
                     description = "Sensor não encontrado"
             )
     })
-    public ResponseEntity<SensorResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(sensorService.buscarPorId(id));
+    //com HATEOAS
+    public ResponseEntity<EntityModel<SensorResponseDTO>> buscarPorId(@PathVariable Long id) {
+
+        SensorResponseDTO responseDTO = sensorService.buscarPorId(id);
+
+            EntityModel<SensorResponseDTO> responseComLinks =
+                    EntityModel.of(responseDTO);
+
+            responseComLinks.add(
+                    linkTo(methodOn(SensorController.class)
+                            .buscarPorId(id))
+                            .withSelfRel()
+            );
+
+            responseComLinks.add(
+                    linkTo(methodOn(SensorController.class)
+                            .listarTodos(Pageable.unpaged()))
+                            .withRel("todos")
+            );
+
+        return ResponseEntity.ok(responseComLinks);
     }
 
     //buscarSensoresPorModulo

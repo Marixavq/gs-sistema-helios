@@ -50,7 +50,7 @@ public class Usuario {
     @Column(nullable = false, length = 100)
     @Schema(
             description = "Senha do usuário",
-            example = "123642",
+            example = "123642789",
             minLength = 8,
             maxLength = 100
     )

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/regras")
-@Tag(name = "RegraAlertas", description = "Endpoints para gerenciamento de regras de alertas")
+@Tag(name = "Regra Alertas", description = "Endpoints para gerenciamento de regras de alertas")
 public class RegraAlertaController {
 
     @Autowired

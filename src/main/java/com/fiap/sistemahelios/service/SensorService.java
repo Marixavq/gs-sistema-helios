@@ -85,8 +85,12 @@ public class SensorService {
         Sensor sensorExistente = sensorRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Sensor não encontrado com ID: " + id));
 
+        ModuloHabitacional moduloHabitacional = moduloHabitacionalRepository.findById(requestDTO.idModulo())
+                .orElseThrow(() -> new RecursoNaoEncontradoException("ModuloHabitacional não encontrado com ID: " + requestDTO.idModulo()));
+
         validarLimites(requestDTO);
 
+        sensorExistente.setModulo(moduloHabitacional);
         sensorExistente.setNomeSensor(requestDTO.nomeSensor());
         sensorExistente.setTipoSensor(requestDTO.tipoSensor());
         sensorExistente.setStatusSensor(requestDTO.statusSensor());

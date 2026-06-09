@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/alertas")
-@Tag(name = "Alerta", description = "Endpoints para gerenciamento de alertas")
+@Tag(name = "Alertas", description = "Endpoints para gerenciamento de alertas")
 
 public class AlertaController {
 
@@ -50,7 +50,7 @@ public class AlertaController {
 
     @GetMapping
     @Operation(
-            summary = "Listar habitats",
+            summary = "Listar alertas",
             description = "Retorna uma lista completa de todos os alertas cadastrados."
     )
     @ApiResponse(

@@ -30,7 +30,7 @@ public record UsuarioRequestDTO(
         @Size(min = 8, max = 100, message = "Senha deve ter entre 8 e 100 caracteres")
         @Schema(
                 description = "Senha do usuário",
-                example = "123642",
+                example = "123642789",
                 minLength = 8,
                 maxLength = 100
         )
