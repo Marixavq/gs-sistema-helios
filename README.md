@@ -2,11 +2,11 @@
 
 ## 🪐 Visão Geral
 
-O projeto consiste em um sistema de gerenciamento de habitats espaciais voltados para futuras operações de colonização e turismo na Lua ou em Marte.
+O projeto consiste no desenvolvimento de um sistema inteligente de gerenciamento de habitats espaciais autônomos, voltado ao suporte de operações em ambientes extremos como Lua ou Marte. A proposta surge da necessidade de monitoramento contínuo e confiável de condições ambientais críticas em cenários de exploração espacial, onde falhas operacionais podem comprometer diretamente a segurança e a sobrevivência dos ocupantes.       
 
-A solução simula o controle de um ambiente espacial habitável, permitindo o monitoramento de condições críticas, gestão de ocupantes, reservas de módulos e integração com sensores ambientais.
+Além de conter simulações de reservas, o sistema é estruturado como uma plataforma de controle e supervisão de infraestrutura habitacional espacial. O foco principal está no gerenciamento de módulos habitacionais, no monitoramento de recursos essenciais e na análise de condições ambientais em tempo real, permitindo uma visão integrada do estado geral do habitat.     
 
-O sistema busca garantir segurança, eficiência operacional e confiabilidade em ambientes extremos.
+Nosso sistema visa garantir segurança, eficiência operacional e confiabilidade em ambientes extremos.
 
 ---
 
@@ -17,7 +17,7 @@ O sistema busca garantir segurança, eficiência operacional e confiabilidade em
 - Spring Data JPA
 - Spring HATEOAS
 - Maven
-- H2 Database (desenvolvimento)
+- H2 Database 
 - Hibernate
 - Bean Validation
 - Swagger/OpenAPI
@@ -133,7 +133,7 @@ Link do projeto no GitHub: https://github.com/Marixavq/gs-sistema-helios
 
 Link do Swagger: http://localhost:8080/swagger-ui/index.html
 
-Deploy no Render:
+Deploy no Render: https://gs-sistema-helios.onrender.com
 
 Vídeo pitch: 
 
