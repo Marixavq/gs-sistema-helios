@@ -63,6 +63,8 @@ public class RegraAlertaService {
         RegraAlerta regraAlertaExistente = regraAlertaRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("RegraAlerta não encontrado com ID: " + id));
 
+        validarValores(requestDTO);
+
         regraAlertaExistente.setTipoSensor(requestDTO.tipoSensor());
         regraAlertaExistente.setValorMinimo(requestDTO.valorMinimo());
         regraAlertaExistente.setValorMaximo(requestDTO.valorMaximo());
