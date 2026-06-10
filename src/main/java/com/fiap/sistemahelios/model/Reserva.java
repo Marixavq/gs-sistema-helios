@@ -64,7 +64,7 @@ public class Reserva {
     @Column(name = "status_reserva", nullable = false, length = 30)
     @Schema(
             description = "Indica se a reserva ainda está ativa sistema",
-            example = "Cancelada",
+            example = "Ativa",
             maxLength = 30
     )
     private String statusReserva;

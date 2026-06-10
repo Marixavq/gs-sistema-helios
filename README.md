@@ -1,4 +1,4 @@
-# Helios - Sistema de Gerenciamento de Habitat Espacial
+# ☀️ Helios - Sistema de Gerenciamento de Habitat Espacial
 
 ## 🪐 Visão Geral
 
@@ -116,7 +116,7 @@ http://localhost:8080
 
 ---
 
-## ⭐ Equipe - Code in Stars 
+## 👨‍💻 Equipe
 
 | Integrante                | RM | Perfil GitHub                                     |
 |---------------------------| --- |---------------------------------------------------|
@@ -136,6 +136,6 @@ Link do Swagger: http://localhost:8080/swagger-ui/index.html
 
 Deploy no Render: https://gs-sistema-helios.onrender.com
 
-Vídeo pitch: 
+Vídeo pitch: https://youtu.be/Mt28iJyQA9A
 
-Vídeo arquitetura do projeto:
+Vídeo arquitetura do projeto: https://youtu.be/voRk8MDf7dk
