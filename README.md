@@ -135,7 +135,3 @@ Link do projeto no GitHub: https://github.com/Marixavq/gs-sistema-helios
 Link do Swagger: http://localhost:8080/swagger-ui/index.html
 
 Deploy no Render: https://gs-sistema-helios.onrender.com
-
-Vídeo pitch: https://youtu.be/Mt28iJyQA9A
-
-Vídeo arquitetura do projeto: https://youtu.be/voRk8MDf7dk
